@@ -1,0 +1,16 @@
+﻿.content-box .tab-box{ width: 100%; padding-top: .12rem; height: .75rem; border-bottom:1px solid #e7e7e7; font-size: 0; background-color: #fff; box-sizing:border-box;} 
+.tab-box .item-tab{ display: inline-block; height: .5rem; line-height: .5rem; width: 49%; font-size: .22rem; text-align: center;} 
+.tab-box .item-tab:first-child{ border-right: 1px solid #e7e7e7;} 
+
+.content-box .main-box{ display: -ms-flexbox; display: flex; 
+	position: absolute; top: 0.76rem; bottom: 0;
+    width: 100%; overflow: hidden; }
+.main-box .menu-one{ -ms-flex: 0 0 1.7rem; flex: 0 0 1.7rem; background-color: #f3f3f3; }
+.main-box .menu-two{ -ms-flex: 1; flex: 1; background-color: #fff; padding:0 0.24rem 0 0.6rem;}
+
+.menu-one .ul-box{ font-size: .22rem; text-align: center; }
+.menu-one .ul-box .item-li{ width: 100%; height: 1rem; line-height: 1rem; border-bottom:1px solid #e7e7e7;}
+
+.menu-two .ul-box{ font-size: .22rem; }
+.menu-two .ul-box .item-li{ height: .66rem; line-height: .66rem; border-bottom: 1px solid #ececec;}
+

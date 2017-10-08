@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>趣-拼班课程</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <!-- 页面调用CSS -->
+    <link rel="stylesheet" type="text/css" href="./style/xqtype.css">
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
+</head>
+<body>
+    <div id="myApp">
+        <div class="header">
+            <span class="icon-head-back"><a href="#"></a></span>
+            <p class="text-head-title">拼班课程</p>
+            <span class="icon-head-tool"></span>
+        </div>
+        <div class="content-box">
+            <!-- <div class="tab-box bbox">
+                <p class="item-tab unselect">全部课程<i class="ico-tri-down"></i></p>
+                <p class="item-tab unselect">离我最近<i class="ico-tri-down"></i></p>
+            </div> -->
+            <div class="main-box">
+                <div class="menu-one">
+                    <ul class="ul-box">
+                        <!-- <li class="item-li">全部课程</li> -->
+                        <li class="item-li">舞蹈</li>
+                        <li class="item-li">美术</li>
+                        <li class="item-li">语言</li>
+                        <li class="item-li">乐器</li>
+                    </ul>
+                </div>
+                <div class="menu-two">
+                    <ul class="ul-box">
+                        <li class="item-li">全部课程</li>
+                        <li class="item-li">舞蹈</li>
+                        <li class="item-li">美术</li>
+                        <li class="item-li">语言</li>
+                        <li class="item-li">乐器</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./script/xqtype.js"></script>
+</body>
+</html>

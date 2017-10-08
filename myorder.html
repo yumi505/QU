@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>我的订单</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
+    <!-- 页面调用CSS -->
+    <link rel="stylesheet" type="text/css" href="./style/myorder.css">
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
+</head>
+<body>
+    <div id="myApp" class="page-group">
+        <div class="page page-current">
+            <div class="header">
+                <span class="icon-head-back"><a href="#"></a></span>
+                <p class="text-head-title">我的订单</p>
+                <span class="icon-head-tool"></span>
+            </div>
+            <div class="content-box">
+                <div class="buttons-tab">
+                    <a href="#tab1" class="tab-link active button">进行中</a>
+                    <a href="#tab2" class="tab-link button">已完成</a>
+                </div>
+                <div class="tabs">
+                    <div id="tab1" class="tab active">
+                        <div class="content-block">
+                            <div class="list-box">
+                                <h3 class="tit">少儿兴趣绘画班5课时</h3>
+                                <p class="add"><i class="ico-add-q"></i>徐汇区肇嘉浜路120号10幢101室</p>
+                                <div class="txt">
+                                    <span class="kc">围棋</span>
+                                    <span class="xs">一对一老师上门</span>
+                                    <span class="sx">|</span>
+                                    <span class="ls">李老师</span>
+                                </div>
+                                <span class="ico-remark-q dzf">
+                                    <i class="t">待支付</i>
+                                </span>
+                                <span class="price">￥688</span>
+                            </div>
+                            <div class="list-box">
+                                <h3 class="tit">少儿兴趣绘画班5课时</h3>
+                                <p class="add"><i class="ico-add-q"></i>徐汇区肇嘉浜路120号10幢101室</p>
+                                <div class="txt">
+                                    <span class="kc">围棋</span>
+                                    <span class="xs">一对一老师上门</span>
+                                    <span class="sx">|</span>
+                                    <span class="ls">李老师</span>
+                                </div>
+                                <span class="ico-remark-q skz">
+                                    <i class="t">上课中</i>
+                                </span>
+                                <span class="price">￥688</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab">
+                        <div class="content-block">
+                            <div class="list-box">
+                                <h3 class="tit">少儿兴趣绘画班5课时</h3>
+                                <p class="add"><i class="ico-add-q"></i>徐汇区肇嘉浜路120号10幢101室</p>
+                                <div class="txt">
+                                    <span class="kc">围棋</span>
+                                    <span class="xs">一对一老师上门</span>
+                                    <span class="sx">|</span>
+                                    <span class="ls">李老师</span>
+                                </div>
+                                <span class="ico-remark-q yqx">
+                                    <i class="t">已取消</i>
+                                </span>
+                                <span class="price">￥688</span>
+                            </div>
+                            <div class="list-box">
+                                <h3 class="tit">少儿兴趣绘画班5课时</h3>
+                                <p class="add"><i class="ico-add-q"></i>徐汇区肇嘉浜路120号10幢101室</p>
+                                <div class="txt">
+                                    <span class="kc">围棋</span>
+                                    <span class="xs">一对一老师上门</span>
+                                    <span class="sx">|</span>
+                                    <span class="ls">李老师</span>
+                                </div>
+                                <span class="ico-remark-q dkb">
+                                    <i class="t">待开班</i>
+                                </span>
+                                <span class="price">￥688</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面调用JS -->
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script type="text/javascript" src="./script/lib/sm.min.js"></script>
+    <script type="text/javascript" src="./script/myorder.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>老师信息</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <!-- 页面调用CSS -->
+    <link rel="stylesheet" type="text/css" href="./style/teacher.css">
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
+</head>
+<body>
+    <div id="myApp">
+        <div class="header">
+            <span class="icon-head-back"><a href="#"></a></span>
+            <p class="text-head-title">老师信息</p>
+            <span class="icon-head-tool"></span>
+        </div>
+        <div class="content-box">
+            <div class="banner-box">
+                <div class="img-box">
+                    <img class="bbox" src="images/img_01.jpg">
+                </div>
+                <div class="txt-box">
+                    <h3><span>吴亦凡</span><i class="ico-certify-q"></i></h3>
+                    <p><span>培训机构老师</span>|<span>80后男老师</span></p>
+                </div>
+            </div>
+            <div class="model-box long-score">
+                <div class="mk">
+                    <strong>300</strong>
+                    <P>教学时长(小时)</P>
+                </div>
+                <div class="mk">
+                    <strong>4.6</strong>
+                    <P>家长评分</P>
+                </div>
+            </div>
+            <div class="model-box rz-info">
+                <p class="tit">
+                    <i class="ico-radiobox-q"></i><span>已认证信息</span>
+                </p>
+                <ul>
+                    <li><i class="ico-radiobox-q"></i><span>实名认证</span></li>
+                    <li><i class="ico-radiobox-q"></i><span>学历学位认证</span></li>
+                    <li><i class="ico-radiobox-q"></i><span>教师认证</span></li>
+                    <li><i class="ico-radiobox-q"></i><span>已认证信息</span></li>
+                    <li><i class="ico-radiobox-q"></i><span>已认证信息</span></li>
+                </ul>
+            </div>
+            <div class="model-box course-info">
+                <p class="tit">
+                    <i class="ico-book-q"></i><span>课程信息</span>
+                </p>
+                <div class="video">
+                </div>
+                <p class="txt">张斯瑞老师自己的信息张斯瑞老师自己的信息张斯瑞老师自己的信息张斯瑞老师自己的信息张斯瑞老师自己的信息张斯瑞老师自己的信息</p>
+            </div>
+            <div class="btn-box">
+                <a class="zx" href="javascript:;">咨询</a>
+                <a class="xz" href="javascript:;">选择老师</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./script/teacher.js"></script>
+</body>
+</html>

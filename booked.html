@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>我要发单</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
+    <!-- 页面调用CSS -->
+    <link rel="stylesheet" type="text/css" href="./style/booked.css">
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
+</head>
+<body>
+    <div id="myApp" v-cloak class="page-group">
+        <div class="page page-current">
+            <div class="header">
+                <span class="icon-head-back"><a href="#"></a></span>
+                <p class="text-head-title">预约一对一课程</p>
+                <span class="icon-head-tool"></span>
+            </div>
+            <div class="content-box">
+                <ul class="list-ul box-shadow">
+                    <li class="list-item">
+                        <label class="tit">兴趣名称</label>
+                        <a href="javascript:;" @click="selectCourseType">
+                            <div class="txt">
+                                <span :class="{'txt-gray': selectedCourseTxt=='请选择'}" v-text="selectedCourseTxt">请选择</span>
+                            </div>
+                            <i class="ico-tri-right"></i>
+                        </a>
+                    </li>
+                    <li class="list-item">
+                        <label class="tit">上课时间</label>
+                        <a href="#">
+                            <div class="txt">
+                               <!--  <span>请选择</span> -->
+                               <input type="text" id='datetime-picker'/>
+                            </div>
+                            <i class="ico-tri-right"></i>
+                        </a>
+                    </li>
+                    <li class="list-item">
+                        <label class="tit">上课方式</label>
+                        <div class="txt">
+                            <p :class="['class-type',class_type]">
+                                <span @click="classType(0)"><i class="ico-radiobox-q teacher"></i>老师上门</span>
+                                <span @click="classType(1)"><i class="ico-radiobox-q parents"></i>家长上门</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li v-if="this.class_type==='teacher'" class="list-item">
+                        <label class="tit">上课地点</label>
+                        <a href="#">
+                            <div class="txt">
+                                <span>请选择</span>
+                            </div>
+                            <i class="ico-tri-right"></i>
+                        </a>
+                    </li>
+                    <li class="list-item">
+                        <label class="tit">上课人数</label>
+                        <div class="txt">
+                            <p :class="['class-type',person_num]">
+                                <span @click="selectPerson(1)"><i class="ico-radiobox-q one"></i>1人</span>
+                                <span @click="selectPerson(2)"><i class="ico-radiobox-q two"></i>2人</span>
+                                <span @click="selectPerson(3)"><i class="ico-radiobox-q three"></i>3人</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="list-item">
+                        <label class="tit">特殊要求</label>
+                        <textarea class="specil-request" placeholder="请输入你的需求"></textarea>
+                    </li>
+                </ul>
+                <div class="btn-tl-wrap">
+                    <a class="btn-tl btn-shadow" href="javascript:;">一健预约</a>
+                </div>
+            </div>
+        </div>
+        <!-- 选择课程类型 -->
+        <div :class="['select-type',{'showSelectType':ifShowType}]">
+            <div class="header">
+                <span class="icon-head-back"><a href="#"></a></span>
+                <p class="text-head-title">拼班课程</p>
+                <span class="icon-head-tool"></span>
+            </div>
+            <div class="content-box">
+                <!-- <div class="tab-box bbox">
+                    <p class="item-tab unselect">全部课程<i class="ico-tri-down"></i></p>
+                    <p class="item-tab unselect">离我最近<i class="ico-tri-down"></i></p>
+                </div> -->
+                <div class="main-box">
+                    <div class="menu-one">
+                        <ul class="ul-box">
+                            <!-- <li class="item-li">全部课程</li> -->
+                            <li :class="['item-li',{'active':item.isActive}]" 
+                                v-for="(item,index) in newCourseType"
+                                v-text="item.className" 
+                                @click="changeType(index,newCourseType)"></li>
+                        </ul>
+                    </div>
+                    <div class="menu-two">
+                        <ul class="ul-box">
+                            <!-- <li class="item-li">全部课程</li> -->
+                            <li :class="['item-li',{'selected':item.selected}]"
+                                v-for="item in selectedCategrys"
+                                v-text="item.courseName" 
+                                @click="selectType(item,newCourseType)"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面调用JS -->
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script type="text/javascript" src="./script/lib/sm.min.js"></script>
+    <script type="text/javascript" src="./script/booked.js"></script>
+</body>
+</html>

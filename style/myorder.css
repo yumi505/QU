@@ -1,0 +1,32 @@
+﻿.tabs { margin: .24rem .2rem 0; height: auto; overflow: hidden; background-color: #fff; border-radius: 5px; border: 1px solid #ddd; }
+.content-block { margin: 0; padding: 0; }
+.content-block .list-box { position: relative; color: #777; padding-left: .26rem; padding-bottom: .22rem; border-bottom: 1px solid #e3e3e3; overflow: hidden; }
+.content-block .list-box:last-child { border-bottom: none; }
+.list-box .tit { margin-top: .22rem; font-size: 0.26rem; height: .26rem; line-height: .26rem; color: #111; }
+.list-box .add { margin-top: .22rem; font-size: 0.21rem; height: .21rem; line-height: .21rem; }
+.ico-add-q { margin-right: 0.1rem; }
+.list-box .txt { margin-top: .22rem; font-size: 0.20rem; height: .20rem; line-height: .20rem; }
+.list-box .txt span { margin: 0 0.05rem; }
+.list-box .txt span.kc { margin-left: 0; display: inline-block; padding: .05rem; font-size: 0.16rem; background-color: #4bbefe; color: #fff; border-radius: 2px; }
+.list-box .txt span.sx { color: #dcdcdc; }
+.list-box .ico-remark-q { font-size: 1rem; position: absolute; right: -0.06rem; top: -0.2rem; }
+
+
+/* --------------------订单状态---------------------------- */
+
+/* 待选择老师、待支付：待支付（黄色）*/
+.list-box .dzf { color: #ffa553; }
+
+/* 待上课、上课中：上课中（绿色）*/
+.list-box .skz { color: #7ed321; }
+
+/* 已取消：已取消（红色）*/
+.list-box .yqx { color: #ff7070; }
+
+/*待老师接单、已完成：待开班（灰色）  */
+.list-box .dkb { color: #d6d6d6; }
+
+
+
+.list-box .ico-remark-q .t { font-style: normal; position: absolute; top: 0.365rem; left: 0.24rem; font-size: 0.22rem; color: #fff; }
+.list-box .price { position: absolute; top: 1.1rem; right: 0.26rem; font-size: 0.23rem; color: #ffa553; font-family: arial; }

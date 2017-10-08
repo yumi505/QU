@@ -1,0 +1,36 @@
+﻿.content-box .banner-box{ background-color:#69b93a; padding:.24rem .16rem 1.16rem; overflow: hidden;}
+.banner-box .img-box{ float: left; margin-left: .66rem; height: 1.38rem;}
+.banner-box .img-box img{ width:1.36rem; height: 1.36rem; border-radius: 50%; border:1px solid #fff;}
+.banner-box .txt-box{ float: left; margin:0.32rem 0 0 0.26rem; color: #fff;}
+
+.banner-box .txt-box h3{ height: .26rem; line-height: .26rem; font-size: .26rem;}
+.banner-box .txt-box p{ margin-left: -6px; margin-top: .3rem; height: .22rem; line-height: .222rem; font-size: .22rem;}
+.banner-box .txt-box p span{ margin:0 6px;}
+
+.model-box{ margin: 0 .16rem; border-radius: 5px; box-shadow: 0 1px 2px #ccc; background-color: #fff; overflow: hidden;}
+.long-score{ margin-top: -0.86rem; padding: .12rem 0; }
+.long-score .mk{ float: left; width: 49%; height: 1.18rem; text-align: center;}
+.long-score .mk:first-child{ border-right:1px solid #ccc;}
+.long-score .mk strong{ display: block; margin-top: .22rem; font-size: .46rem; line-height: .46rem; font-weight: bold; color:#ffa553;}
+.long-score .mk p{ margin-top: .16rem; font-size: .22rem; line-height: .22rem;}
+
+.rz-info{ margin-top: 0.16rem; font-size: .22rem;}
+.rz-info i{ margin-right: 0.1rem; }
+.rz-info .tit{ padding-left: .18rem; height: .66rem; line-height: .66rem; border-bottom: 2px solid #ddd;}
+.rz-info ul{ padding-left: .18rem; overflow: hidden;}
+.rz-info ul li{ float: left; margin-right: .3rem; padding: .1rem 0; line-height: .3rem;}
+.rz-info ul li i{ color: #7fc854;}
+
+.course-info{ margin-top: 0.16rem; font-size: .22rem;}
+.course-info i{ margin-right: 0.1rem; }
+.course-info .tit{ padding-left: .18rem; height: .66rem; line-height: .66rem; border-bottom: 1px solid #ddd;}
+.course-info .video{ margin: .16rem; height: 2.86rem; background-color: #000;}
+.course-info p.txt{ margin: .16rem; line-height: 1.5;}
+
+.btn-box{margin-top: 0.16rem; padding: .1rem .16rem; background-color: #fff; font-size:0;}
+.btn-box a{ display: inline-block; text-align: center; 
+	height: .6rem; line-height: .6rem; border-radius: 5px;
+	color: #fff;
+}
+.btn-box .zx{ width: 33%; background-color: #94d86e;font-size: .26rem;}
+.btn-box .xz{ margin-left: 1%; width: 66%; background-color: #ffa553;font-size: .22rem;}

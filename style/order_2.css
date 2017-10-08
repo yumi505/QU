@@ -1,0 +1,39 @@
+﻿/* 沙漏 */
+.hourglass{ animation:hourglass 3s infinite linear; transform-origin: 50% 50%;}
+@keyframes hourglass{
+  to{transform: rotate(360deg);  }
+}
+.warn-box{ display: flex; height: .98rem; background-color: #fff0c7; border-bottom: 2px solid #f2da95; font-size: 0.2rem; color: #9f6726;}
+.warn-box .l-box{ flex:0 0 1rem; font-size: 0.5rem; text-align: center; line-height: .98rem; color: #4cac16;}
+.warn-box .r-box{ flex:1; padding-top: 0.1rem;}
+.warn-box .r-box p{}
+
+/* 倒计时 */
+.ZCountdown{ font-size: 0.3rem;}
+
+
+
+
+.tc-ul { margin: .24rem .2rem 0; padding: 0 0.08rem; height: auto; overflow: hidden; background-color: #fff; border-radius: 5px; border: 1px solid #ddd; }
+.tc-ul .tc-li { display: flex; position: relative; color: #777; padding:.22rem 0.17rem; overflow: hidden; border-bottom: 1px solid #ccc; }
+
+.tc-ul .tc-li .l{ flex:0 0 1.2rem; height: 1rem;  }
+.tc-ul .tc-li .l img{ width:1rem ; height: 1rem; border-radius: 50%; border:1px solid #ccc;}
+.tc-ul .tc-li .r{ flex:1; position: relative; padding-top: 0.15rem; }
+
+
+.tc-li .r h3{ line-height: 0.26rem;}
+.tc-li .r h3 .name{ font-size: 0.26rem; color:#333;}
+.tc-li .r h3 .score{ display: inline-block; height: 0.14rem; line-height: 0.14rem; padding: 5px; border:1px solid #ffa553; border-radius:1rem; font-size: 0.14rem; color:#ffa553;}
+
+.tc-li .r p { margin-top: 0.2rem; line-height: 0.21rem; font-size: 0.21rem; color: #999; }
+.tc-li .r p span{ margin-right: 0.08rem;}
+
+.tc-li .r .price{ position: absolute; top:0.1rem; right:0; font-size: 0.24rem; color:#ffa553; }
+
+
+
+
+/* 取消订单按钮 */
+.content-box .btn-box{ width: 100%; height:0.22rem; line-height: 0.22rem; text-align: center; }
+.content-box .btn-box a{ font-size: 0.22rem; color: #666; text-decoration: underline;}

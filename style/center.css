@@ -1,0 +1,34 @@
+﻿.content-box .banner-box{ 
+	margin: .1rem 0; width: 100%; height: auto; 
+	padding: .24rem 0;
+    overflow: hidden;
+	background-color: #fff; color: #333;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.banner-box .pic-box{float: left; margin-left: .66rem; height: 1.38rem;}
+.banner-box .tit-box{float: left; margin: 0.5rem 0 0 0.3rem; }
+.banner-box .tit-box p{height: .26rem; line-height: .26rem; font-size: .3rem;}
+.banner-box .pic-box img{ width: 1.36rem; height: 1.36rem; border-radius: 50%; border: 1px solid #fff;}
+
+
+
+.content-box .list-ul{ padding: 0 .1rem; height: auto; overflow: hidden; 
+	background-color: #fff; border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.list-ul .list-item{ 
+	padding: 0 .18rem; height: .81rem; line-height: .81rem; 
+	border-bottom: 1px solid #e7e7e7; font-size: .24rem; color: #333;
+	overflow: hidden;
+}
+.list-ul .list-item:last-child{ border-bottom: none; }
+.list-ul .list-item .tit{ float: left; width: 1.3rem;}
+.list-ul .list-item .txt{ float: right; width: 76%; text-align: right;}
+.list-ul .list-item a{ color: #333;}
+.list-item a [class^="ico-tri"],
+.list-item a [class*=" ico-tri"] { 
+	line-height: .81rem; color: #d6d6d6;
+}
+

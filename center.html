@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>趣-个人中心</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <!-- 页面调用CSS -->
+    <link rel="stylesheet" type="text/css" href="./style/center.css">
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
+</head>
+<body>
+    <div id="myApp">
+        <div class="header">
+            <span class="icon-head-back"><a href="#"></a></span>
+            <p class="text-head-title">个人中心</p>
+            <span class="icon-head-tool"></span>
+        </div>
+        <div class="content-box">
+            <div class="banner-box">
+                <div class="pic-box">
+                    <img src="images/img_01.jpg"/>
+                </div>
+                <div class="tit-box">
+                    <p>WX账户名</p>
+                </div>
+            </div>
+            <ul class="list-ul">
+                <li class="list-item">
+                    <label class="tit">手机</label>
+                    <a href="xqtype.html">
+                        <div class="txt">
+                            <span class="txt-gray">请选择</span>
+                            <i class="ico-tri-right"></i>
+                        </div>
+                    </a>
+                </li>
+                <li class="list-item">
+                    <label class="tit">学生资料</label>
+                    <a href="#">
+                        <div class="txt">
+                            <i class="ico-tri-right"></i>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="./script/center.js"></script>
+</body>
+</html>

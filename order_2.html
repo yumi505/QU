@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>订单详情</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" type="text/css" href="./style/common.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./style/lib/sm.css"> -->
+    <!-- 页面调用CSS -->
+    <link rel="stylesheet" type="text/css" href="./style/order_2.css">
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
+</head>
+<body>
+    <div id="myApp" class="page-group">
+        <div class="page page-current">
+            <div class="header">
+                <span class="icon-head-back"><a href="#"></a></span>
+                <p class="text-head-title">订单详情</p>
+                <span class="icon-head-tool"></span>
+            </div>
+            <div class="content-box">
+                <div class="warn-box">
+                    <div class="l-box hourglass">
+                        <i class="ico-hourglass-q"></i>
+                    </div>
+                    <div class="r-box">
+                        <p>已有<span class="t-num">8</span>位老师接单</p>
+                        <p>您还有来选择其中一位老师！</p>
+                    </div>
+                </div>
+                <ul class="tc-ul">
+                    <li class="tc-li">
+                        <div class="l">
+                            <img src="images/img_01.jpg" alt="教师图像" />
+                        </div>
+                        <div class="r">
+                            <h3>
+                                <span class="name">李宝英</span>
+                                <span class="score">4.9分</span>
+                            </h3>
+                            <p>
+                                <span>培训机构老师</span>
+                                <span>|</span>
+                                <span>累计授课300小时</span>
+                            </p>
+                            <span class="price">￥500</span>
+                        </div>
+                    </li>
+                    <li class="tc-li">
+                        <div class="l">
+                            <img src="images/img_01.jpg" alt="教师图像" />
+                        </div>
+                        <div class="r">
+                            <h3>
+                                <span class="name">李宝英</span>
+                                <span class="score">4.9分</span>
+                            </h3>
+                            <p>
+                                <span>培训机构老师</span>
+                                <span>|</span>
+                                <span>累计授课300小时</span>
+                            </p>
+                            <span class="price">￥500</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="btn-box">
+                    <a href="javascript:;">取消订单</a>
+                </div>
+                <!-- <div class="ZCountdown">
+                    <span class="type type-day"><em class="day">0</em><span class="unit">天</span></span><span class="type type-hour"><em class="hour">00</em><span class="unit">时</span></span><span class="type type-min"><em class="min">00</em><span class="unit">分</span></span><span class="type type-sec"><em class="sec">00</em><span class="unit">秒</span></span>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面调用JS -->
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <!--<script type="text/javascript" src="./script/lib/sm.min.js"></script>-->
+    <script type="text/javascript" src="./script/order_2.js"></script>
+</body>
+</html>

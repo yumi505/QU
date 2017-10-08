@@ -1,0 +1,83 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?osrzgi');
+  src:  url('fonts/icomoon.eot?osrzgi#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?osrzgi') format('truetype'),
+    url('fonts/icomoon.woff?osrzgi') format('woff'),
+    url('fonts/icomoon.svg?osrzgi#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="ico-"], [class*=" ico-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ico-tri-right:before {
+  content: "\e912";
+}
+.ico-add-q:before {
+  content: "\e900";
+}
+.ico-book-q:before {
+  content: "\e901";
+}
+.ico-certify-q:before {
+  content: "\e902";
+}
+.ico-close-q:before {
+  content: "\e903";
+}
+.ico-comment-q:before {
+  content: "\e904";
+}
+.ico-coupon-q:before {
+  content: "\e905";
+}
+.ico-gantan-q:before {
+  content: "\e906";
+}
+.ico-hook-q:before {
+  content: "\e907";
+}
+.ico-hourglass-q:before {
+  content: "\e908";
+}
+.ico-mobile-q:before {
+  content: "\e909";
+}
+.ico-order-q:before {
+  content: "\e90a";
+}
+.ico-radiobox-q:before {
+  content: "\e90b";
+}
+.ico-remark-q:before {
+  content: "\e90c";
+}
+.ico-tel-q:before {
+  content: "\e90d";
+}
+.ico-time-q:before {
+  content: "\e90e";
+}
+.ico-tri-down:before {
+  content: "\e90f";
+}
+.ico-tri-up:before {
+  content: "\e910";
+}
+.ico-wallet-q:before {
+  content: "\e911";
+}
