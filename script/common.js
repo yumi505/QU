@@ -5,6 +5,10 @@ axios.defaults.withCredentials = true ;
 if(!axios){ $.toast('浏览器不支持axios发送请求');}
 
 var xq = {
+    /*用于授权的测试手机号*/
+    testPhoneNum:'13297133121',
+    appId:'5331a43b2b91c4c0cb43f7011ccd99d68f31d516',
+    app_secret:'b5805c036941cee0fef57192e7db9c13f9f84e77',
     /*接口地址*/
     xqAPI:'http://test.api.xqudj.com/api/',
     /*URL 取参*/

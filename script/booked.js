@@ -1,4 +1,27 @@
-﻿var app = new Vue({
+﻿var sendApiUrl = xq.xqAPI + 'sms/send';
+var tokenApiUrl = xq.xqAPI + 'token/create';
+var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
+
+var sendPara = {
+    "phone": xq.testPhoneNum,
+    "sign": "c6285cead8558e4eca68461c0c09f2eb",
+    "timestamp": new Date().getTime(),
+    "appId": xq.appId
+};
+
+var tokenPara = {
+    "userName": xq.testPhoneNum,
+    "password": "111111",
+    "validType": 2,
+    "authType": 0,
+    "appSecret": xq.app_secret,
+    "sign": "c6285cead8558e4eca68461c0c09f2eb",
+    "timestamp": new Date().getTime(),
+    "appId": xq.appId
+ 
+};
+
+var app = new Vue({
     el:'#myApp',
     data:{
         class_type:'teacher',
@@ -121,7 +144,7 @@
 });
 
 $(function(){
-     Date.prototype.format = function(fmt) {
+    Date.prototype.format = function(fmt) {
         var o = {
             "M+" : this.getMonth()+1,                 //月份
             "d+" : this.getDate(),                    //日
@@ -150,3 +173,46 @@ $(function(){
         value: currTime.split('-')
     });
 });
+
+
+function sendAuth(){
+    axios.post(sendApiUrl,sendPara).then(function(res){
+        console.log(res.data);
+        if(res.data.code == 200){
+            creatToken();
+        }
+    }).catch(function(err){
+        console.log(err)
+    });  
+}
+
+function creatToken(){
+    axios.post(tokenApiUrl,tokenPara).then(function(res){
+        console.log(res.data);
+        if(res.data.code == 200){
+            getHobby(res.data.data[0].accessToken);
+        }
+    }).catch(function(err){
+        console.log(err)
+    });  
+}
+
+function getHobby(token){
+    var hobbyParam = {
+        "sign": "c6285cead8558e4eca68461c0c09f2eb",
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId/*,
+        "accessToken":token*/
+    };
+    axios.get(hobbyApiUrl,{params:hobbyParam}).then(function(res){
+        console.log(res.data);
+        if(res.data.code == 200){
+            
+        }
+    }).catch(function(err){
+        console.log(err)
+    });   
+}
+
+sendAuth();
+
