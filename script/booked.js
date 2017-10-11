@@ -4,7 +4,7 @@ var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
 
 var sendPara = {
     "phone": xq.testPhoneNum,
-    "sign": "c6285cead8558e4eca68461c0c09f2eb",
+    /*"sign": "c6285cead8558e4eca68461c0c09f2eb",*/
     "timestamp": new Date().getTime(),
     "appId": xq.appId
 };
@@ -15,7 +15,7 @@ var tokenPara = {
     "validType": 2,
     "authType": 0,
     "appSecret": xq.app_secret,
-    "sign": "c6285cead8558e4eca68461c0c09f2eb",
+    /*"sign": "c6285cead8558e4eca68461c0c09f2eb",*/
     "timestamp": new Date().getTime(),
     "appId": xq.appId
  
@@ -176,6 +176,9 @@ $(function(){
 
 
 function sendAuth(){
+    var sign = xq.signCoputed(sendPara);
+    sendPara.sign = sign;
+    
     axios.post(sendApiUrl,sendPara).then(function(res){
         console.log(res.data);
         if(res.data.code == 200){
