@@ -43,7 +43,7 @@ var xq = {
 
         var sign = arrParams.join('&');
         sign = sign + CryptoJS.MD5(this.app_secret);
-        sign = CryptoJS.MD5(sign);
+        sign = CryptoJS.MD5(sign).toString();
         return sign;
     }
 };

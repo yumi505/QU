@@ -2,25 +2,6 @@
 var tokenApiUrl = xq.xqAPI + 'token/create';
 var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
 
-var sendPara = {
-    "phone": xq.testPhoneNum,
-    /*"sign": "c6285cead8558e4eca68461c0c09f2eb",*/
-    "timestamp": new Date().getTime(),
-    "appId": xq.appId
-};
-
-var tokenPara = {
-    "userName": xq.testPhoneNum,
-    "password": "111111",
-    "validType": 2,
-    "authType": 0,
-    "appSecret": xq.app_secret,
-    /*"sign": "c6285cead8558e4eca68461c0c09f2eb",*/
-    "timestamp": new Date().getTime(),
-    "appId": xq.appId
- 
-};
-
 var app = new Vue({
     el:'#myApp',
     data:{
@@ -77,7 +58,6 @@ var app = new Vue({
     methods:{
         //授课方式-老师上门 or 家长上门
         classType:function(type){
-            //console.log(typeof(type));
             this.class_type = type == 0?'teacher':'parents';
         },
         //选择上课人数
@@ -112,14 +92,14 @@ var app = new Vue({
             this.ifShowType = false;
 
             all.forEach(function(parent,i){
-                parent.categrys.forEach(function(child,i){
+                parent.childs.forEach(function(child,i){
                     //追加的属性，用来控制分类选中着色
                     child.selected = false;
                 });
             });
 
             item.selected = true;
-            this.selectedCourse = item.courseName; 
+            this.selectedCourse = item.hobbyName; 
         }
     },
     computed:{
@@ -127,19 +107,12 @@ var app = new Vue({
             return this.courseType;
         },
         selectedCategrys:function(){
-            return this.courseType[this.selectedCategryIndex].categrys;
+            return this.courseType[this.selectedCategryIndex].childs;
         },
         selectedCourseTxt:function(){
             var txt = this.selectedCourse ==="" ? '请选择': this.selectedCourse;
-
             return txt;
         }
-    },
-    mounted:function(){
-        //打开上次展开的分类
-        var that = this;
-        var selectedIndex = that.selectedCategryIndex
-        that.courseType[selectedIndex].isActive = true;
     }
 });
 
@@ -174,13 +147,17 @@ $(function(){
     });
 });
 
-
 function sendAuth(){
+    var sendPara = {
+        "phone": xq.testPhoneNum,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+
     var sign = xq.signCoputed(sendPara);
     sendPara.sign = sign;
     
     axios.post(sendApiUrl,sendPara).then(function(res){
-        console.log(res.data);
         if(res.data.code == 200){
             creatToken();
         }
@@ -190,8 +167,20 @@ function sendAuth(){
 }
 
 function creatToken(){
+    var tokenPara = {
+        "userName": xq.testPhoneNum,
+        "password": "111111",
+        "validType": 2,
+        "authType": 0,
+        "appSecret": xq.app_secret,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+
+    var sign = xq.signCoputed(tokenPara);
+    tokenPara.sign = sign;
+
     axios.post(tokenApiUrl,tokenPara).then(function(res){
-        console.log(res.data);
         if(res.data.code == 200){
             getHobby(res.data.data[0].accessToken);
         }
@@ -201,16 +190,24 @@ function creatToken(){
 }
 
 function getHobby(token){
+    axios.defaults.headers.common['Authorization'] = "Bearer "+token;
+    //axios.defaults.headers.get['Content-Type'] = 'application/json';
+
     var hobbyParam = {
-        "sign": "c6285cead8558e4eca68461c0c09f2eb",
         "timestamp": new Date().getTime(),
-        "appId": xq.appId/*,
-        "accessToken":token*/
+        "appId": xq.appId
     };
+
+    var sign = xq.signCoputed(hobbyParam);
+    hobbyParam.sign = sign;
+
     axios.get(hobbyApiUrl,{params:hobbyParam}).then(function(res){
-        console.log(res.data);
         if(res.data.code == 200){
-            
+            app.courseType = res.data.data;
+            //默认展开第一个分类
+            var that = app;
+            var selectedIndex = that.selectedCategryIndex
+            that.courseType[selectedIndex].isActive = true;
         }
     }).catch(function(err){
         console.log(err)

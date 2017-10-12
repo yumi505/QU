@@ -46,8 +46,8 @@
 .select-type .content-box .main-box{ display: -ms-flexbox; display: flex; 
 	position: absolute; top: 0.76rem; bottom: 0;
     width: 100%; overflow: hidden; }
-.select-type .main-box .menu-one{ -ms-flex: 0 0 1.7rem; flex: 0 0 1.7rem; background-color: #f3f3f3; }
-.select-type .main-box .menu-two{ -ms-flex: 1; flex: 1; background-color: #fff; padding:0 0.24rem 0 0.6rem;}
+.select-type .main-box .menu-one{ -ms-flex: 0 0 1.7rem; flex: 0 0 1.7rem; background-color: #f3f3f3; overflow-y: auto;}
+.select-type .main-box .menu-two{ -ms-flex: 1; flex: 1; background-color: #fff; padding:0 0.24rem 0 0.6rem; overflow-y: auto;}
 
 .select-type .menu-one .ul-box{ font-size: .22rem; text-align: center; }
 .select-type .menu-one .ul-box .item-li{ width: 100%; height: 1rem; line-height: 1rem; border-bottom:1px solid #e7e7e7;}

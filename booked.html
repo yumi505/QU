@@ -99,7 +99,7 @@
                             <!-- <li class="item-li">全部课程</li> -->
                             <li :class="['item-li',{'active':item.isActive}]"
                                 v-for="(item,index) in newCourseType"
-                                v-text="item.className"
+                                v-text="item.hobbyName"
                                 @click="changeType(index,newCourseType)"></li>
                         </ul>
                     </div>
@@ -108,7 +108,7 @@
                             <!-- <li class="item-li">全部课程</li> -->
                             <li :class="['item-li',{'selected':item.selected}]"
                                 v-for="item in selectedCategrys"
-                                v-text="item.courseName"
+                                v-text="item.hobbyName"
                                 @click="selectType(item,newCourseType)"></li>
                         </ul>
                     </div>
@@ -149,8 +149,7 @@
     <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
     <script type="text/javascript" src="./script/lib/axios.min.js"></script>
     <script type="text/javascript" src="./script/lib/sm.min.js"></script>
-    <script type="text/javascript" src="./script/lib/core.js"></script>
-    <script type="text/javascript" src="./script/lib/md5.js"></script>
+    <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
     <script type="text/javascript" src="./script/common.js"></script>
     <script type="text/javascript" src="./script/booked.js"></script>
 </body>
