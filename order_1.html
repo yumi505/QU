@@ -13,7 +13,59 @@
     <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
     <!-- 页面调用CSS -->
     <link rel="stylesheet" type="text/css" href="./style/order_1.css">
+</head>
+<body>
+    <div id="myApp" class="page-group">
+        <div class="page page-current">
+            <div class="header">
+                <span class="icon-head-back"><a href="#"></a></span>
+                <p class="text-head-title">订单详情</p>
+                <span class="icon-head-tool"></span>
+            </div>
+            <div class="content-box">
+                <div class="warn-box">
+                    <div class="l-box hourglass">
+                        <i class="ico-hourglass-q"></i>
+                    </div>
+                    <div class="r-box">
+                        <p>我们已经将您的课程需求推送给<span class="t-num"><span v-text="recommendNum"></span></span>位老师</p>
+                        <p>您还有等待老师接单！</p>
+                    </div>
+                </div>
+                <div class="tabs">
+                    <div id="tab1" class="tab active">
+                        <div class="content-block">
+                            <!-- 待选择老师 -->
+                            <div class="list-box">
+                                <h3 class="tit" v-text="bookTime"></h3>
+                                <div class="txt">
+                                    <span class="kc" v-text="hobbyName"></span>
+                                    <span class="xs" v-text="classesType"></span>
+                                    <span class="sx">|</span>
+                                    <span class="ls">共<span v-text="studentCount"></span>人</span>
+                                </div>
+                                <p class="add"><i class="ico-add-q"></i><span v-text="address"></span></p>
+                                <span class="ico-remark-q dkb">
+                                    <i class="t" v-text="orderStatus"></i>
+                                </span>
+                                <span class="price" style="display:none;">￥688</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-box">
+                    <a href="javascript:;">取消订单</a>
+                </div>
+                <div class="ZCountdown">
+                    <span class="type type-day"><em class="day">0</em><span class="unit">天</span></span><span class="type type-hour"><em class="hour">00</em><span class="unit">时</span></span><span class="type type-min"><em class="min">00</em><span class="unit">分</span></span><span class="type type-sec"><em class="sec">00</em><span class="unit">秒</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面调用JS -->
     <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="./script/lib/jquery.min.js"></script>
     <script>
         var viewportFix = function() {
             var v_t;
@@ -42,59 +94,11 @@
         }
         viewportFix();
     </script>
-</head>
-<body>
-    <div id="myApp" class="page-group">
-        <div class="page page-current">
-            <div class="header">
-                <span class="icon-head-back"><a href="#"></a></span>
-                <p class="text-head-title">订单详情</p>
-                <span class="icon-head-tool"></span>
-            </div>
-            <div class="content-box">
-                <div class="warn-box">
-                    <div class="l-box hourglass">
-                        <i class="ico-hourglass-q"></i>
-                    </div>
-                    <div class="r-box">
-                        <p>我们已经将您的课程需求推送给<span class="t-num">200</span>位老师</p>
-                        <p>您还有等待老师接单！</p>
-                    </div>
-                </div>
-                <div class="tabs">
-                    <div id="tab1" class="tab active">
-                        <div class="content-block">
-                            <!-- 待选择老师 -->
-                            <div class="list-box">
-                                <h3 class="tit">6月30日 18:30(星期四)</h3>
-                                <div class="txt">
-                                    <span class="kc">围棋</span>
-                                    <span class="xs">老师上门</span>
-                                    <span class="sx">|</span>
-                                    <span class="ls">共3人</span>
-                                </div>
-                                <p class="add"><i class="ico-add-q"></i>徐汇区肇嘉浜路120号10幢101室</p>
-                                <span class="ico-remark-q dkb">
-                                    <i class="t">待开班</i>
-                                </span>
-                                <span class="price">￥688</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-box">
-                    <a href="javascript:;">取消订单</a>
-                </div>
-                <div class="ZCountdown">
-                    <span class="type type-day"><em class="day">0</em><span class="unit">天</span></span><span class="type type-hour"><em class="hour">00</em><span class="unit">时</span></span><span class="type type-min"><em class="min">00</em><span class="unit">分</span></span><span class="type type-sec"><em class="sec">00</em><span class="unit">秒</span></span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 页面调用JS -->
     <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script type="text/javascript" src="./script/lib/axios.min.js"></script>
     <script type="text/javascript" src="./script/lib/sm.min.js"></script>
+    <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="./script/common.js"></script>
     <script type="text/javascript" src="./script/order_1.js"></script>
 </body>
 </html>

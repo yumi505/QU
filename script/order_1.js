@@ -1,31 +1,4 @@
-﻿var app = new Vue({
-    el:'#myApp',
-    data:{
-        class_type:'teacher',
-        person_num:'person_one'
-    },
-    methods:{
-        classType:function(type){
-            //console.log(typeof(type));
-            this.class_type = type == 0?'teacher':'parents';
-        },
-        selectPerson:function(num){
-            switch(num){
-                case 1:
-                    this.person_num = 'person_one';
-                break;
-                case 2:
-                    this.person_num = 'person_two';
-                break;
-                case 3:
-                    this.person_num = 'person_three';
-                break;
-            }
-        }
-    }
-});
-
-(function($){
+﻿(function($){
     $.extend({
         ZCountdown: function(options) {
             var defaults = {
@@ -84,7 +57,7 @@
             return method.countDown(opts.className, opts.endTime, opts.callback);
         }
     });
-})(Zepto);
+})(jQuery);
 
 $(function(){
     $.ZCountdown({
@@ -92,3 +65,78 @@ $(function(){
         endTime: '2016/11/11 00:00:00'
     });
 });
+
+var orderDetailUrl = xq.xqAPI + 'parents/order/oto/detail';
+
+var app = new Vue({
+    el:'#myApp',
+    data:{
+        bookTime:'',
+        hobbyName:'',
+        classesType:'',
+        studentCount:0,
+        address:'',
+        orderStatus:'',
+        recommendNum:66
+    },
+    methods:{
+    },
+    computed:{
+        /*bookedMonth:function(){
+            var date = new Date(this.bookTime);
+            var month = date.getMonth()+1;
+            return month;
+        },
+        bookedDay:function(){
+            var date = new Date(this.bookTime);
+            var day = date.getDate()+1;
+            return day;
+        },
+        bookedTime:function(){
+            var date = new Date(this.bookTime);
+            var time = date.getHours() + ":" + date.getMinutes();
+            return time;
+        },
+        bookedWeek:function(){
+            var date = new Date(this.bookTime);
+            var week = date.getDay();
+            switch(week){
+
+            }
+            return time;
+        }*/
+    }
+});
+
+function getOrderDetail(){
+    var orderParam = {
+        "orderId":xq.getUrlParam('orderId'),
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+    var sign = xq.signCoputed(orderParam);
+    orderParam.sign = sign;
+
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.get(orderDetailUrl,{params:orderParam}).then(function(res){
+        if(res.data.code == 200){
+            //app.orderDetail = res.data.data[0];
+            app.bookTime = res.data.data[0].title;
+            app.hobbyName = res.data.data[0].hobbyName;
+            app.classesType = res.data.data[0].classesType;
+            app.studentCount = res.data.data[0].studentCount;
+            app.address = res.data.data[0].address;
+            app.orderStatus = res.data.data[0].orderStatus;
+            if(res.data.data[0].recommendNum){
+                app.recommendNum = res.data.data[0].recommendNum;
+            }
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
+getOrderDetail();
+

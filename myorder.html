@@ -13,36 +13,6 @@
     <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
     <!-- 页面调用CSS -->
     <link rel="stylesheet" type="text/css" href="./style/myorder.css">
-    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
-
-    <script>
-        var viewportFix = function() {
-            var v_t;
-            var handlerOrientationChange = function() {
-                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
-                var fontSize = 100 * (width / 640);
-                document.documentElement.style.fontSize = fontSize + "px";
-            };
-            var timeoutFun = function() {
-                clearTimeout(v_t);
-                v_t = setTimeout(function() {
-                    handlerOrientationChange();
-                }, 50);
-            }
-            window.onload = function() {
-                if (document.readyState == 'complete') {
-                    handlerOrientationChange();
-                }
-            }
-            timeoutFun();
-            $(window).resize(function() {
-                timeoutFun();
-            }).on("orientationchange", function() {
-                timeoutFun();
-            });
-        }
-        viewportFix();
-    </script>
 </head>
 <body>
     <div id="myApp" class="page-group">
@@ -126,10 +96,42 @@
             </div>
         </div>
     </div>
-
+    <!-- 页面调用JS -->
+    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script>
+        var viewportFix = function() {
+            var v_t;
+            var handlerOrientationChange = function() {
+                var width = (window.innerWidth <= 320) ? 320 : ((window.innerWidth >= 640) ? 640 : window.innerWidth);
+                var fontSize = 100 * (width / 640);
+                document.documentElement.style.fontSize = fontSize + "px";
+            };
+            var timeoutFun = function() {
+                clearTimeout(v_t);
+                v_t = setTimeout(function() {
+                    handlerOrientationChange();
+                }, 50);
+            }
+            window.onload = function() {
+                if (document.readyState == 'complete') {
+                    handlerOrientationChange();
+                }
+            }
+            timeoutFun();
+            $(window).resize(function() {
+                timeoutFun();
+            }).on("orientationchange", function() {
+                timeoutFun();
+            });
+        }
+        viewportFix();
+    </script>
     <!-- 页面调用JS -->
     <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script type="text/javascript" src="./script/lib/axios.min.js"></script>
     <script type="text/javascript" src="./script/lib/sm.min.js"></script>
+    <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="./script/common.js"></script>
     <script type="text/javascript" src="./script/myorder.js"></script>
 </body>
 </html>

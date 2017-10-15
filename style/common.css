@@ -80,8 +80,8 @@ body{ background-color: #f1f1f1;}
 
 /*通栏按钮*/
 .btn-tl-wrap{ margin-top: 30px; width: 100%; padding: 0 .16rem; height: .74rem; box-sizing:border-box;}
-.btn-tl{ 
-	display:block; width: 100%; height:100%; 
+.btn-tl{
+	display:block; width: 100%; height:100%;
 	text-align: center; line-height: .74rem; background-color:#69b93a; color: #fff;
 	border-radius: 5px; font-size: .26rem;
 }
@@ -109,3 +109,7 @@ body{ background-color: #f1f1f1;}
 #myApp .header .icon-head-tool{ display: inline-block; width: 10%;}
 
 #myApp .content-box{}
+
+/*----------------- 组件样式重置--------------------------- */
+/* 警告弹窗 */
+body .toast { height: 0.6rem; line-height: 0.6rem; font-size: 0.28rem; padding: 0 0.3rem; }

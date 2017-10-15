@@ -10,10 +10,47 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" type="text/css" href="./style/common.css">
     <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
     <!-- 页面调用CSS -->
     <link rel="stylesheet" type="text/css" href="./style/bindmobile.css">
+
+</head>
+<body>
+    <div id="myApp">
+        <div class="header">
+            <span class="icon-head-back"><a href="#"></a></span>
+            <p class="text-head-title">绑定手机</p>
+            <span class="icon-head-tool"></span>
+        </div>
+        <div class="content-box">
+            <div class="warning-box">
+                <p>为了提升您的账号安全，建议绑定手机号</p>
+            </div>
+            <ul class="list-ul">
+                <li class="list-item">
+                    <label class="tit">手机号</label>
+                    <div class="txt">
+                        <input type="text" maxlength="11" placeholder="11位数字" v-model="mobileInpVal" />
+                    </div>
+                </li>
+                <li class="list-item">
+                    <label class="tit">动态密码</label>
+                    <div class="txt">
+                        <input type="text" maxlength="6" placeholder="6位数字" v-model="yzCodeInpVal" />
+                        <input :class="{'txtGray':isCountign}" type="button" @click="sendYzCode(60)" v-model="yzCodeTxt">
+                    </div>
+                </li>
+            </ul>
+            <div class="btn-tl-wrap">
+                <a class="btn-tl btn-shadow" href="javascript:;" @click="submitBindMobile">确认</a>
+            </div>
+            <p class="tk">
+                点击确认，即表示您已同意《兴趣到家<a href="#">服务条款</a>》
+            </p>
+        </div>
+    </div>
+    <!-- 页面调用JS -->
     <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
-    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
     <script>
         var viewportFix = function() {
             var v_t;
@@ -42,41 +79,11 @@
         }
         viewportFix();
     </script>
-</head>
-<body>
-    <div id="myApp">
-        <div class="header">
-            <span class="icon-head-back"><a href="#"></a></span>
-            <p class="text-head-title">绑定手机</p>
-            <span class="icon-head-tool"></span>
-        </div>
-        <div class="content-box">
-            <div class="warning-box">
-                <p>为了提升您的账号安全，建议绑定手机号</p>
-            </div>
-            <ul class="list-ul">
-                <li class="list-item">
-                    <label class="tit">手机号</label>
-                    <div class="txt">
-                        <input type="text" maxlength="11" placeholder="11位数字" />
-                    </div>
-                </li>
-                <li class="list-item">
-                    <label class="tit">动态密码</label>
-                    <div class="txt">
-                        <input type="text" maxlength="6" placeholder="6位数字" />
-                        <input type="button" value="验证码">
-                    </div>
-                </li>
-            </ul>
-            <div class="btn-tl-wrap">
-                <a class="btn-tl btn-shadow" href="javascript:;">确认</a>
-            </div>
-            <p class="tk">
-                点击确认，即表示您已同意《兴趣到家<a href="#">服务条款</a>》
-            </p>
-        </div>
-    </div>
+    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script type="text/javascript" src="./script/lib/axios.min.js"></script>
+    <script type="text/javascript" src="./script/lib/sm.min.js"></script>
+    <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="./script/common.js"></script>
     <script type="text/javascript" src="./script/bindmobile.js"></script>
 </body>
 </html/>

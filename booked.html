@@ -38,7 +38,7 @@
                         <a href="#">
                             <div class="txt">
                                <!--  <span>请选择</span> -->
-                               <input type="text" id='datetime-picker'/>
+                               <input type="text" id='datetime-picker' :value="classesTime">
                             </div>
                             <i class="ico-tri-right"></i>
                         </a>
@@ -47,8 +47,8 @@
                         <label class="tit">上课方式</label>
                         <div class="txt">
                             <p :class="['class-type',class_type]">
-                                <span @click="classType(0)"><i class="ico-radiobox-q teacher"></i>老师上门</span>
-                                <span @click="classType(1)"><i class="ico-radiobox-q parents"></i>家长上门</span>
+                                <span @click="classType(1)"><i class="ico-radiobox-q teacher"></i>老师上门</span>
+                                <span @click="classType(2)"><i class="ico-radiobox-q parents"></i>家长上门</span>
                             </p>
                         </div>
                     </li>
@@ -73,11 +73,11 @@
                     </li>
                     <li class="list-item">
                         <label class="tit">特殊要求</label>
-                        <textarea class="specil-request" placeholder="请输入你的需求"></textarea>
+                        <textarea class="specil-request" placeholder="请输入你的需求" maxlength="100" v-model="remark"></textarea>
                     </li>
                 </ul>
                 <div class="btn-tl-wrap">
-                    <a class="btn-tl btn-shadow" href="javascript:;">一健预约</a>
+                    <a class="btn-tl btn-shadow" href="javascript:;" @click="submitOrder">一健预约</a>
                 </div>
             </div>
         </div>

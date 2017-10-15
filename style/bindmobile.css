@@ -1,19 +1,19 @@
-﻿.content-box .warning-box{ 
-	width: 100%; height: auto; 
+﻿.content-box .warning-box{
+	width: 100%; height: auto;
 	padding: .1rem 0;
-	background-color: #fff0c7; 
+	background-color: #fff0c7;
 	border-bottom: 1px solid #eacf84;
 }
-.warning-box p{ text-align: center; font-size: .22rem; line-height: .6rem; color: #9b6220;} 
+.warning-box p{ text-align: center; font-size: .22rem; line-height: .6rem; color: #9b6220;}
 
 
 
-.content-box .list-ul{ padding: 0 .1rem; height: auto; overflow: hidden; 
+.content-box .list-ul{ padding: 0 .1rem; height: auto; overflow: hidden;
 	background-color: #fff; border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 }
-.list-ul .list-item{ 
-	padding: 0 .18rem; height: .81rem; line-height: .81rem; 
+.list-ul .list-item{
+	padding: 0 .18rem; height: .81rem; line-height: .81rem;
 	border-bottom: 1px solid #e7e7e7; font-size: .24rem; color: #333;
 	overflow: hidden;
 }
@@ -21,11 +21,13 @@
 .list-ul .list-item .tit{ float: left; width: 1.3rem;}
 .list-ul .list-item .txt{ float: right; width: 76%; }
 .list-ul .list-item .txt input{ width: 46%; height: 100%; border: none;}
-.list-ul .list-item .txt input[type='button']{ 
+.list-ul .list-item .txt input[type='button']{
 	height:.5rem; line-height: .5rem;
 	background-color:#69b93a; color: #fff;border-radius: 5px;
 }
-
+.list-ul .list-item .txt input.txtGray{
+	background-color:#ccc;
+}
 p.tk{ margin-top: .2rem; font-size: .2rem; color: #666; text-align: center;}
 p.tk a{ color: #666; text-decoration: underline;}
 

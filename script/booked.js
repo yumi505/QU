@@ -1,6 +1,39 @@
-﻿var sendApiUrl = xq.xqAPI + 'sms/send';
+﻿$(function(){
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+
+        if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        }
+        for(var k in o) {
+            if(new RegExp("("+ k +")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            }
+        }
+        return fmt;
+    };
+
+    var currTime = new Date().format("yyyy-MM-dd-hh-mm");
+
+    //选择时间
+    $("#datetime-picker").datetimePicker({
+        value: currTime.split('-'),
+        inputReadOnly:false
+    });
+});
+
+var sendApiUrl = xq.xqAPI + 'sms/send';
 var tokenApiUrl = xq.xqAPI + 'token/create';
 var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
+var publishOrderUrl = xq.xqAPI + 'parents/order/oto/publish';
 
 var app = new Vue({
     el:'#myApp',
@@ -53,12 +86,19 @@ var app = new Vue({
                 courseName:'围棋'
              }]
          }
-        ]
+        ],
+        accessToken:'',
+        hobbyId:'',
+        classesTime:'',
+        classesType: 1,
+        studentCount: 1,
+        remark:''
     },
     methods:{
         //授课方式-老师上门 or 家长上门
         classType:function(type){
-            this.class_type = type == 0?'teacher':'parents';
+            this.class_type = type == 1?'teacher':'parents';
+            this.classesType = type;
         },
         //选择上课人数
         selectPerson:function(num){
@@ -73,6 +113,7 @@ var app = new Vue({
                     this.person_num = 'person_three';
                 break;
             }
+            this.studentCount = num;
         },
         //选择课程分类
         selectCourseType:function(){
@@ -99,7 +140,48 @@ var app = new Vue({
             });
 
             item.selected = true;
-            this.selectedCourse = item.hobbyName; 
+            this.selectedCourse = item.hobbyName;
+            this.hobbyId = item.hobbyId;
+        },
+        submitOrder:function(){
+            var publishOrderParam = {
+                "hobbyId": this.hobbyId,
+                "classesTime": '',
+                "classesType": this.classesType,
+                "address": '上海市杨浦区黄兴路2053弄201',
+                "lngX": 0,
+                "latY": 0,
+                "studentCount": this.studentCount,
+                "remark": this.remark,
+                "timestamp": new Date().getTime(),
+                "appId": xq.appId
+            };
+
+            publishOrderParam.classesTime = $('#datetime-picker').val();
+
+            if(publishOrderParam.hobbyId == ''){
+                $.toast('请选择兴趣名称');
+                return;
+            }
+
+            if(publishOrderParam.classesTime == ''){
+                $.toast('请选择上课时间');
+                return;
+            }
+
+            if(publishOrderParam.classesType == 1){
+                if(publishOrderParam.address == ''){
+                    $.toast('请选择上课地点');
+                    return;
+                }
+            }
+
+            if(publishOrderParam.remark == ''){
+                $.toast('请输入上课要求');
+                return;
+            }
+
+            publishOrder(publishOrderParam);
         }
     },
     computed:{
@@ -116,37 +198,6 @@ var app = new Vue({
     }
 });
 
-$(function(){
-    Date.prototype.format = function(fmt) {
-        var o = {
-            "M+" : this.getMonth()+1,                 //月份
-            "d+" : this.getDate(),                    //日
-            "h+" : this.getHours(),                   //小时
-            "m+" : this.getMinutes(),                 //分
-            "s+" : this.getSeconds(),                 //秒
-            "q+" : Math.floor((this.getMonth()+3)/3), //季度
-            "S"  : this.getMilliseconds()             //毫秒
-        };
-
-        if(/(y+)/.test(fmt)) {
-            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-        }
-        for(var k in o) {
-            if(new RegExp("("+ k +")").test(fmt)){
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
-            }
-        }
-        return fmt;
-    };
-
-    var currTime = new Date().format("yyyy-MM-dd-hh-mm");
-
-    //选择时间
-    $("#datetime-picker").datetimePicker({
-        value: currTime.split('-')
-    });
-});
-
 function sendAuth(){
     var sendPara = {
         "phone": xq.testPhoneNum,
@@ -156,14 +207,16 @@ function sendAuth(){
 
     var sign = xq.signCoputed(sendPara);
     sendPara.sign = sign;
-    
+
     axios.post(sendApiUrl,sendPara).then(function(res){
         if(res.data.code == 200){
             creatToken();
+        }else{
+            $.toast(res.data.message);
         }
     }).catch(function(err){
         console.log(err)
-    });  
+    });
 }
 
 function creatToken(){
@@ -182,15 +235,19 @@ function creatToken(){
 
     axios.post(tokenApiUrl,tokenPara).then(function(res){
         if(res.data.code == 200){
-            getHobby(res.data.data[0].accessToken);
+            app.accessToken = res.data.data[0].accessToken;
+            sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
+            getHobby();
+        }else{
+            $.toast(res.data.message);
         }
     }).catch(function(err){
-        console.log(err)
-    });  
+        console.log(err);
+    });
 }
 
-function getHobby(token){
-    axios.defaults.headers.common['Authorization'] = "Bearer "+token;
+function getHobby(){
+    axios.defaults.headers.common['Authorization'] = "Bearer " + app.accessToken;
     //axios.defaults.headers.get['Content-Type'] = 'application/json';
 
     var hobbyParam = {
@@ -206,12 +263,33 @@ function getHobby(token){
             app.courseType = res.data.data;
             //默认展开第一个分类
             var that = app;
-            var selectedIndex = that.selectedCategryIndex
+            var selectedIndex = that.selectedCategryIndex;
             that.courseType[selectedIndex].isActive = true;
+        }else{
+            $.toast(res.data.message);
         }
     }).catch(function(err){
-        console.log(err)
-    });   
+        console.log(err);
+    });
+}
+
+function publishOrder(param){
+    var sign = xq.signCoputed(param);
+    param.sign = sign;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + app.accessToken;
+
+    axios.post(publishOrderUrl,param).then(function(res){
+        if(res.data.code == 200){
+            $.toast('预约成功');
+            setTimeout(function(){
+                location.href="order_1.html?orderId=" + res.data.data[0].orderId;
+            },2000);
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
 }
 
 sendAuth();
