@@ -1,6 +1,7 @@
 ﻿.tabs { margin: .24rem .2rem 0; height: auto; overflow: hidden; background-color: #fff; border-radius: 5px; border: 1px solid #ddd; }
 .content-block { margin: 0; padding: 0; }
 .content-block .list-box { position: relative; color: #777; padding-left: .26rem; padding-bottom: .22rem; border-bottom: 1px solid #e3e3e3; overflow: hidden; }
+.content-block .list-box a{  color: #777;}
 .content-block .list-box:last-child { border-bottom: none; }
 .list-box .tit { margin-top: .22rem; font-size: 0.26rem; height: .26rem; line-height: .26rem; color: #111; }
 .list-box .add { margin-top: .22rem; font-size: 0.21rem; height: .21rem; line-height: .21rem; }

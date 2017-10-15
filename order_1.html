@@ -45,7 +45,7 @@
                                     <span class="ls">共<span v-text="studentCount"></span>人</span>
                                 </div>
                                 <p class="add"><i class="ico-add-q"></i><span v-text="address"></span></p>
-                                <span class="ico-remark-q dkb">
+                                <span :class="['ico-remark-q',markStatus(orderStatusValue)]">
                                     <i class="t" v-text="orderStatus"></i>
                                 </span>
                                 <span class="price" style="display:none;">￥688</span>

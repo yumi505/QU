@@ -77,9 +77,31 @@ var app = new Vue({
         studentCount:0,
         address:'',
         orderStatus:'',
+        orderStatusValue:0,
         recommendNum:66
     },
     methods:{
+        markStatus:function(param){
+            var statusClass = '';
+            switch(param){
+                case 1:/*待老师接单、已完成：待开班（灰色）  */
+                    statusClass = 'dkb';
+                break;
+                case 2:/* 待选择老师、待支付：待支付（黄色）*/
+                    statusClass = 'dzf';
+                break;
+                case 3: /* 待上课、上课中：上课中（绿色）*/
+                    statusClass = 'skz';
+                break;
+                case 4: /* 已完成*/
+                    statusClass = 'ywc';
+                break; 
+                case 5: /* 已取消：已取消（红色）*/
+                    statusClass = 'yqx';
+                break; 
+            }
+            return statusClass;
+        }
     },
     computed:{
         /*bookedMonth:function(){
@@ -127,6 +149,7 @@ function getOrderDetail(){
             app.studentCount = res.data.data[0].studentCount;
             app.address = res.data.data[0].address;
             app.orderStatus = res.data.data[0].orderStatus;
+            app.orderStatusValue = res.data.data[0].orderStatusValue;
             if(res.data.data[0].recommendNum){
                 app.recommendNum = res.data.data[0].recommendNum;
             }
