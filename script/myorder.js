@@ -1,9 +1,14 @@
-﻿var getOrdersUrl = xq.xqAPI + 'order/my/list';
+﻿var redirect_uri = encodeURIComponent(location.href);
+var getOrdersUrl = xq.xqAPI + 'order/my/list';
+var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
 
 var app = new Vue({
     el:'#myApp',
     data:{
-        orderList:[]
+        orderList:[],
+        wxCode:'',
+        wxOpenId:'',
+        wxAccessToken:''
     },
     methods:{
         markStatus:function(param){
@@ -33,6 +38,64 @@ var app = new Vue({
     }
 });
 
+function wechatLinkJump(){
+    var wechatLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+xq.gzhAppId+"&redirect_uri="+
+    redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+
+    location.href = wechatLink;
+}
+
+function wechatAuth(){
+    var wechatAuthPara = {
+        "appSecret": xq.app_secret,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId,
+        "code": app.wxCode
+    };
+
+    var sign = xq.signCoputed(wechatAuthPara);
+    wechatAuthPara.sign = sign;
+
+    axios.post(wxAuthorUrl,wechatAuthPara).then(function(res){
+        if(res.data.code == 200){
+            app.wxOpenId = res.data.data[0].openId;
+            app.wxAccessToken = res.data.data[0].accessToken;
+            creatToken();
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err)
+    });
+}
+
+function creatToken(){
+    var tokenPara = {
+        "userName": app.wxOpenId,
+        "password": app.wxAccessToken,
+        "validType": 3, //Auth验证
+        "authType": 1, //微信认证
+        "appSecret": xq.app_secret,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+
+    var sign = xq.signCoputed(tokenPara);
+    tokenPara.sign = sign;
+
+    axios.post(tokenApiUrl,tokenPara).then(function(res){
+        if(res.data.code == 200){
+            app.accessToken = res.data.data[0].accessToken;
+            sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
+            getMyOrders(0);
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
 function getMyOrders(orderType){
     var orderListPara = {
         'orderType':0, //0: 全部, 1: 拼班, 2: 一对一
@@ -60,4 +123,23 @@ function getMyOrders(orderType){
     });
 }
 
-getMyOrders(1);
+function getUrlCode(){
+    var wxAccessToken = sessionStorage.setItem('wxAccessToken');
+    var wxOpenId = sessionStorage.setItem('wxOpenId');
+    
+    if(accessToken){
+        app.wxAccessToken = wxAccessToken;
+        app.wxOpenId = wxOpenId;
+        creatToken();
+    }else{
+        var wechatCode = xq.getUrlParam('code');
+        if(wechatCode){
+            app.wxCode = wechatCode;
+            wechatAuth();
+        }else{
+          wechatLinkJump();  
+        } 
+    }  
+}
+
+getUrlCode();

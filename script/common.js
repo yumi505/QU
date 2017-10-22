@@ -5,6 +5,7 @@ axios.defaults.withCredentials = true ;
 if(!axios){ $.toast('浏览器不支持axios发送请求');}
 
 var xq = {
+    gzhAppId:'wxd43c12a546e3de86',
     /*用于授权的测试手机号*/
     testPhoneNum:'13297133121',
     appId:'5331a43b2b91c4c0cb43f7011ccd99d68f31d516',

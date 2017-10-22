@@ -59,14 +59,8 @@
     });
 })(jQuery);
 
-$(function(){
-    $.ZCountdown({
-        className: '.ZCountdown',
-        endTime: '2017/11/11 00:00:00'
-    });
-});
-
 var orderDetailUrl = xq.xqAPI + 'parents/order/oto/detail';
+var cancelOrderUrl = xq.xqAPI + 'parents/order/oto/cancel';
 
 var app = new Vue({
     el:'#myApp',
@@ -79,7 +73,7 @@ var app = new Vue({
         orderStatus:'',
         orderStatusValue:0,
         recommendNum:66,
-        timeCountDown:''
+        orderTime:''
     },
     methods:{
         markStatus:function(param){
@@ -105,7 +99,7 @@ var app = new Vue({
         }
     },
     computed:{
-        /*bookedMonth:function(){
+        bookedMonth:function(){
             var date = new Date(this.bookTime);
             var month = date.getMonth()+1;
             return month;
@@ -127,19 +121,15 @@ var app = new Vue({
 
             }
             return time;
-        }*/
+        }
     }
 });
 
-function timeCountDown(){
-   var timeLimit = 24*60*60*1000;
-
-   setInterval(function(){
-      var nowTime = new Date()*1;
-
-   },1000);
-
-
+function timeCountDown(orderTime){
+    $.ZCountdown({
+        className: '.ZCountdown',
+        endTime: orderTime
+    });
 }
 
 function getOrderDetail(){
@@ -160,12 +150,42 @@ function getOrderDetail(){
             app.hobbyName = res.data.data[0].hobbyName;
             app.classesType = res.data.data[0].classesType;
             app.studentCount = res.data.data[0].studentCount;
-            app.address = res.data.data[0].address;
             app.orderStatus = res.data.data[0].orderStatus;
             app.orderStatusValue = res.data.data[0].orderStatusValue;
+            app.orderTime = res.data.data[0].orderTime;
+
             if(res.data.data[0].recommendNum){
                 app.recommendNum = res.data.data[0].recommendNum;
             }
+            if(!res.data.data[0].address){
+                if(res.data.data[0].classesType == 2){
+                    app.address = '家长上门'; 
+                }
+            }
+            timeCountDown(res.data.data[0].orderTime);
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
+function cancelOrder(){
+    var cancelParam = {
+      "orderId": xq.getUrlParam('orderId'),
+      "cancelReason": "家长发布后自己取消",
+      "timestamp": new Date().getTime(),
+      "appId": xq.appId
+    };
+
+    var sign = xq.signCoputed(cancelParam);
+    cancelParam.sign = sign;
+
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.get(cancelOrderUrl,{params:cancelParam}).then(function(res){
+        if(res.data.code == 200){
+            $.toast('订单已取消');
         }else{
             $.toast(res.data.message);
         }

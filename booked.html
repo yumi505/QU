@@ -38,7 +38,7 @@
                         <a href="#">
                             <div class="txt">
                                <!--  <span>请选择</span> -->
-                               <input type="text" id='datetime-picker' :value="classesTime">
+                               <input type="text" id='datetime-picker'>
                             </div>
                             <i class="ico-tri-right"></i>
                         </a>
@@ -54,12 +54,15 @@
                     </li>
                     <li v-if="this.class_type==='teacher'" class="list-item">
                         <label class="tit">上课地点</label>
-                        <a href="#">
+                        <!-- <a href="#">
                             <div class="txt">
                                 <span>请选择</span>
                             </div>
                             <i class="ico-tri-right"></i>
-                        </a>
+                        </a> -->
+                        <div class="txt">
+                           <input type="text" placeholder="请输入" :value="classAddress">
+                        </div>
                     </li>
                     <li class="list-item">
                         <label class="tit">上课人数</label>
@@ -151,6 +154,6 @@
     <script type="text/javascript" src="./script/lib/sm.min.js"></script>
     <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
     <script type="text/javascript" src="./script/common.js"></script>
-    <script type="text/javascript" src="./script/booked.js"></script>
+    <script type="text/javascript" src="./script/booked.js?v=201710221534"></script>
 </body>
 </html>

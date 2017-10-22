@@ -29,8 +29,9 @@
         inputReadOnly:false
     });
 });
+var redirect_uri = encodeURIComponent(location.href);
+var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
 
-var sendApiUrl = xq.xqAPI + 'sms/send';
 var tokenApiUrl = xq.xqAPI + 'token/create';
 var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
 var publishOrderUrl = xq.xqAPI + 'parents/order/oto/publish';
@@ -87,12 +88,16 @@ var app = new Vue({
              }]
          }
         ],
-        accessToken:'',
+        accessToken:'',//接口授权 accessToken
         hobbyId:'',
         classesTime:'',
+        classAddress:'',
         classesType: 1,
         studentCount: 1,
-        remark:''
+        remark:'',
+        wxCode:'',
+        wxOpenId:'',
+        wxAccessToken:''
     },
     methods:{
         //授课方式-老师上门 or 家长上门
@@ -148,7 +153,7 @@ var app = new Vue({
                 "hobbyId": this.hobbyId,
                 "classesTime": '',
                 "classesType": this.classesType,
-                "address": '上海市杨浦区黄兴路2053弄201',
+                "address": this.classAddress,
                 "lngX": 0,
                 "latY": 0,
                 "studentCount": this.studentCount,
@@ -171,15 +176,15 @@ var app = new Vue({
 
             if(publishOrderParam.classesType == 1){
                 if(publishOrderParam.address == ''){
-                    $.toast('请选择上课地点');
+                    $.toast('请输入上课地点');
                     return;
                 }
             }
 
-            if(publishOrderParam.remark == ''){
+            /*if(publishOrderParam.remark == ''){
                 $.toast('请输入上课要求');
                 return;
-            }
+            }*/
 
             publishOrder(publishOrderParam);
         }
@@ -198,18 +203,32 @@ var app = new Vue({
     }
 });
 
-function sendAuth(){
-    var sendPara = {
-        "phone": xq.testPhoneNum,
+function wechatLinkJump(){
+    var wechatLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+xq.gzhAppId+"&redirect_uri="+
+    redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+
+    location.href = wechatLink;
+}
+
+function wechatAuth(){
+    var wechatAuthPara = {
+        "appSecret": xq.app_secret,
         "timestamp": new Date().getTime(),
-        "appId": xq.appId
+        "appId": xq.appId,
+        "code": app.wxCode
     };
 
-    var sign = xq.signCoputed(sendPara);
-    sendPara.sign = sign;
+    var sign = xq.signCoputed(wechatAuthPara);
+    wechatAuthPara.sign = sign;
 
-    axios.post(sendApiUrl,sendPara).then(function(res){
+    axios.post(wxAuthorUrl,wechatAuthPara).then(function(res){
         if(res.data.code == 200){
+            app.wxOpenId = res.data.data[0].openId;
+            app.wxAccessToken = res.data.data[0].accessToken;
+
+            sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
+            sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
+
             creatToken();
         }else{
             $.toast(res.data.message);
@@ -221,10 +240,10 @@ function sendAuth(){
 
 function creatToken(){
     var tokenPara = {
-        "userName": xq.testPhoneNum,
-        "password": "111111",
-        "validType": 2,
-        "authType": 0,
+        "userName": app.wxOpenId,
+        "password": app.wxAccessToken,
+        "validType": 3, //Auth验证
+        "authType": 1, //微信认证
         "appSecret": xq.app_secret,
         "timestamp": new Date().getTime(),
         "appId": xq.appId
@@ -292,5 +311,15 @@ function publishOrder(param){
     });
 }
 
-sendAuth();
+function getUrlCode(){
+    var wechatCode = xq.getUrlParam('code');
+    if(wechatCode){
+        app.wxCode = wechatCode;
+        wechatAuth();
+    }else{
+      wechatLinkJump();  
+    }
+}
+
+getUrlCode();
 

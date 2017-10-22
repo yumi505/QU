@@ -1,5 +1,5 @@
 ﻿/* 沙漏 */
-.hourglass{ animation:hourglass 3s infinite linear; transform-origin: 50% 50%;}
+.hourglass{ /*animation:hourglass 3s infinite linear;*/ transform-origin: 50% 50%;}
 @keyframes hourglass{
   to{transform: rotate(360deg);  }
 }
