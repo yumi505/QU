@@ -34,6 +34,7 @@ var app = new Vue({
             return statusClass;
         },
         getOrders:function(orderType){
+            $.showIndicator();
             getMyOrders(orderType);
         }
     }
@@ -94,6 +95,7 @@ function creatToken(){
         if(res.data.code == 200){
             app.accessToken = res.data.data[0].accessToken;
             sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
+            $.showIndicator();
             getMyOrders(1);
         }else{
             $.toast(res.data.message);
@@ -120,6 +122,7 @@ function getMyOrders(orderType){
 
     axios.get(getOrdersUrl,{params:orderListPara}).then(function(res){
         if(res.data.code == 200){
+            $.hideIndicator();
             console.log(res.data.data);
             app.orderList = res.data.data;
         }else{
