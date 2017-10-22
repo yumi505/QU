@@ -9,7 +9,9 @@
 .warn-box .r-box p{}
 
 /* 倒计时 */
-.ZCountdown{ font-size: 0.3rem;}
+.ZCountdown{ font-size: 0.26rem;}
+.ZCountdown .type em { font-style: normal; }
+.ZCountdown .type .unit{ }
 
 .tabs { margin: .24rem .2rem 0; height: auto; overflow: hidden; background-color: #fff; border-radius: 5px; border: 1px solid #ddd; }
 .content-block { margin: 0; padding: 0; }

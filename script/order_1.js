@@ -3,7 +3,7 @@
         ZCountdown: function(options) {
             var defaults = {
                 className: 'ZCountdown', //设置需要执行元素的className
-                endTime: '2016/12/21 00:00:00', //设置倒计时的目标时间
+                endTime: '2017/12/21 00:00:00', //设置倒计时的目标时间
                 saveDay: false, //设置当倒计时时间小于一天后是否保留day
                 showDay: true, //设置受否显示天
                 showHour: true, //设置受否显示小时
@@ -62,7 +62,7 @@
 $(function(){
     $.ZCountdown({
         className: '.ZCountdown',
-        endTime: '2016/11/11 00:00:00'
+        endTime: '2017/11/11 00:00:00'
     });
 });
 
@@ -78,7 +78,8 @@ var app = new Vue({
         address:'',
         orderStatus:'',
         orderStatusValue:0,
-        recommendNum:66
+        recommendNum:66,
+        timeCountDown:''
     },
     methods:{
         markStatus:function(param){
@@ -130,12 +131,24 @@ var app = new Vue({
     }
 });
 
+function timeCountDown(){
+   var timeLimit = 24*60*60*1000;
+
+   setInterval(function(){
+      var nowTime = new Date()*1;
+
+   },1000);
+
+
+}
+
 function getOrderDetail(){
     var orderParam = {
         "orderId":xq.getUrlParam('orderId'),
         "timestamp": new Date().getTime(),
         "appId": xq.appId
     };
+
     var sign = xq.signCoputed(orderParam);
     orderParam.sign = sign;
 
