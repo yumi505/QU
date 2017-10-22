@@ -31,7 +31,7 @@
                     <div id="tab1" class="tab active">
                         <div class="content-block">
                             <div class="list-box" v-for="orderItem in orderList">
-                                <a :href="'order_1.html?orderId='+orderItem.orderId">
+                                <a external :href="'order_1.html?orderId='+orderItem.orderId">
                                     <h3 class="tit" v-text="orderItem.title"></h3>
                                     <div class="txt">
                                         <span class="kc" v-text="orderItem.hobbyName"></span>
@@ -41,7 +41,7 @@
                                     </div>
                                     <p class="add">
                                         <i class="ico-add-q"></i>
-                                        <span v-text="orderItem.address"></span>
+                                        <span v-text="orderItem.address?orderItem.address:'家长上门'"></span>
                                     </p>
                                     <span :class="['ico-remark-q',markStatus(orderItem.orderStatusValue)]">
                                         <i class="t" v-text="orderItem.orderStatus"></i>
@@ -54,7 +54,7 @@
                     <div id="tab2" class="tab">
                         <div class="content-block">
                             <div class="list-box" v-for="orderItem in orderList">
-                                <a :href="'order_1.html?orderId='+orderItem.orderId">
+                                <a external :href="'order_1.html?orderId='+orderItem.orderId">
                                     <h3 class="tit" v-text="orderItem.title"></h3>
                                     <div class="txt">
                                         <span class="kc" v-text="orderItem.hobbyName"></span>
@@ -64,7 +64,7 @@
                                     </div>
                                     <p class="add">
                                         <i class="ico-add-q"></i>
-                                        <span v-text="orderItem.address"></span>
+                                        <span v-text="orderItem.address?orderItem.address:'家长上门'"></span>
                                     </p>
                                     <span :class="['ico-remark-q',markStatus(orderItem.orderStatusValue)]">
                                         <i class="t" v-text="orderItem.orderStatus"></i>
@@ -114,6 +114,6 @@
     <script type="text/javascript" src="./script/lib/sm.min.js"></script>
     <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
     <script type="text/javascript" src="./script/common.js"></script>
-    <script type="text/javascript" src="./script/myorder.js?v=201710221815"></script>
+    <script type="text/javascript" src="./script/myorder.js"></script>
 </body>
 </html>

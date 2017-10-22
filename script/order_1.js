@@ -73,7 +73,8 @@ var app = new Vue({
         orderStatus:'',
         orderStatusValue:0,
         recommendNum:66,
-        orderTime:''
+        orderTime:'',
+        cancelReason:''
     },
     methods:{
         markStatus:function(param){
@@ -96,6 +97,9 @@ var app = new Vue({
                 break; 
             }
             return statusClass;
+        },
+        cancelOrder:function(){
+            cancelOrder();
         }
     },
     computed:{
@@ -153,15 +157,12 @@ function getOrderDetail(){
             app.orderStatus = res.data.data[0].orderStatus;
             app.orderStatusValue = res.data.data[0].orderStatusValue;
             app.orderTime = res.data.data[0].orderTime;
+            app.cancelReason = res.data.data[0].cancelReason;
 
             if(res.data.data[0].recommendNum){
                 app.recommendNum = res.data.data[0].recommendNum;
             }
-            if(!res.data.data[0].address){
-                if(res.data.data[0].classesType == 2){
-                    app.address = '家长上门'; 
-                }
-            }
+             
             timeCountDown(res.data.data[0].orderTime);
         }else{
             $.toast(res.data.message);
@@ -183,7 +184,7 @@ function cancelOrder(){
     cancelParam.sign = sign;
 
     axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
-    axios.get(cancelOrderUrl,{params:cancelParam}).then(function(res){
+    axios.post(cancelOrderUrl,cancelParam).then(function(res){
         if(res.data.code == 200){
             $.toast('订单已取消');
         }else{
