@@ -1,4 +1,11 @@
-﻿$(function(){
+﻿var redirect_uri = encodeURIComponent(location.href);
+var tqDay = 2; //要求的提前预约天数
+var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
+var tokenApiUrl = xq.xqAPI + 'token/create';
+var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
+var publishOrderUrl = xq.xqAPI + 'parents/order/oto/publish';
+
+$(function(){
     Date.prototype.format = function(fmt) {
         var o = {
             "M+" : this.getMonth()+1,                 //月份
@@ -21,20 +28,17 @@
         return fmt;
     };
 
-    var currTime = new Date().format("yyyy-MM-dd-hh-mm");
+    var currTime = new Date();
+    //预约时间距离当前时间至少有1.5天之后
+    var dateTime = new Date(currTime*1 + tqDay*24*60*60*1000).format("yyyy-MM-dd-hh-mm");
 
     //选择时间
     $("#datetime-picker").datetimePicker({
-        value: currTime.split('-'),
+        value: dateTime.split('-'),
         inputReadOnly:false
     });
 });
-var redirect_uri = encodeURIComponent(location.href);
-var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
 
-var tokenApiUrl = xq.xqAPI + 'token/create';
-var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
-var publishOrderUrl = xq.xqAPI + 'parents/order/oto/publish';
 
 var app = new Vue({
     el:'#myApp',
@@ -172,6 +176,15 @@ var app = new Vue({
             if(publishOrderParam.classesTime == ''){
                 $.toast('请选择上课时间');
                 return;
+            }else{
+               var nowTime = new Date()*1;
+               var inpTime = new Date(publishOrderParam.classesTime)*1;
+               var tqTime = tqDay*24*60*60*1000;
+               var subTime = inpTime - nowTime;
+               if(subTime < tqTime){
+                    $.toast('预约时间至少提前2天');
+                    return;
+               }
             }
 
             if(publishOrderParam.classesType == 1){
@@ -228,7 +241,8 @@ function wechatAuth(){
 
             sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
             sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
-
+            sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
+            sessionStorage.setItem('sessionTimeStamp', new Date()*1);
             creatToken();
         }else{
             $.toast(res.data.message);
@@ -312,12 +326,27 @@ function publishOrder(param){
 }
 
 function getUrlCode(){
-    var wechatCode = xq.getUrlParam('code');
-    if(wechatCode){
-        app.wxCode = wechatCode;
-        wechatAuth();
+    var wxAccessToken = sessionStorage.getItem('wxAccessToken');
+    var wxOpenId = sessionStorage.getItem('wxOpenId');
+    var sessionTimeStamp = sessionStorage.getItem('sessionTimeStamp');
+    var expiresIn = sessionStorage.getItem('expiresIn');
+
+    var expiresTime = (new Date()*1) - parseInt(sessionTimeStamp,10);
+    expiresTime = expiresTime/1000 ;
+
+    //有 wxAccessToken 且在有效期内（expiresIn:7200秒）
+    if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
+        app.wxAccessToken = wxAccessToken;
+        app.wxOpenId = wxOpenId;
+        creatToken();
     }else{
-      wechatLinkJump();  
+        var wechatCode = xq.getUrlParam('code');
+        if(wechatCode){
+            app.wxCode = wechatCode;
+            wechatAuth();
+        }else{
+          wechatLinkJump();  
+        } 
     }
 }
 

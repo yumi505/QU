@@ -23,17 +23,24 @@
                 <span class="icon-head-tool"></span>
             </div>
             <div class="content-box">
-                <div class="warn-box">
-                    <div class="l-box hourglass">
-                        <i class="ico-hourglass-q"></i>
+                <template v-if="orderStatusValue ==5">
+                    <div class="warn-box canceled">
+                        <p><i class="ico-q ico-gantan-q"></i><span v-text="cancelReason"></span></p>
+                    </div> 
+                </template>
+                <template v-else>
+                    <div class="warn-box">
+                        <div class="l-box hourglass">
+                            <i class="ico-q ico-hourglass-q"></i>
+                        </div>
+                        <div class="r-box">
+                            <p>我们已经将您的课程需求推送给<span class="t-num"><span v-text="recommendNum"></span></span>位老师</p>
+                            <p>您还有<span class="ZCountdown" style="">
+                        <span class="type type-day"><em class="day">0</em><span class="unit">天</span></span><span class="type type-hour"><em class="hour">00</em><span class="unit">时</span></span><span class="type type-min"><em class="min">00</em><span class="unit">分</span></span><span class="type type-sec"><em class="sec">00</em><span class="unit">秒</span></span>
+                    </span>等待老师接单！</p>
+                        </div>
                     </div>
-                    <div class="r-box">
-                        <p>我们已经将您的课程需求推送给<span class="t-num"><span v-text="recommendNum"></span></span>位老师</p>
-                        <p>您还有<span class="ZCountdown" style="">
-                    <span class="type type-day"><em class="day">0</em><span class="unit">天</span></span><span class="type type-hour"><em class="hour">00</em><span class="unit">时</span></span><span class="type type-min"><em class="min">00</em><span class="unit">分</span></span><span class="type type-sec"><em class="sec">00</em><span class="unit">秒</span></span>
-                </span>等待老师接单！</p>
-                    </div>
-                </div>
+                </template>
                 <div class="tabs">
                     <div id="tab1" class="tab active">
                         <div class="content-block">
@@ -46,7 +53,7 @@
                                     <span class="sx">|</span>
                                     <span class="ls">共<span v-text="studentCount"></span>人</span>
                                 </div>
-                                <p class="add"><i class="ico-add-q"></i><span v-text="address"></span></p>
+                                <p class="add"><i class="ico-add-q"></i><span v-text="address?address:'家长上门'"></span></p>
                                 <span :class="['ico-remark-q',markStatus(orderStatusValue)]">
                                     <i class="t" v-text="orderStatus"></i>
                                 </span>
@@ -55,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn-box">
+                <div class="btn-box" v-if="orderStatusValue !=5">
                     <a href="javascript:;">取消订单</a>
                 </div>
             </div>

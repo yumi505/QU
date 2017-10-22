@@ -7,6 +7,21 @@
 .warn-box .l-box{ flex:0 0 1rem; font-size: 0.5rem; text-align: center; line-height: .98rem; color: #4cac16;}
 .warn-box .r-box{ flex:1; padding-top: 0.1rem;}
 .warn-box .r-box p{}
+.warn-box.canceled{ width: 100%; height: 0.5rem; background-color: #69b93a;}
+.warn-box.canceled p{ 
+	width: 100%;
+    margin: 0 0.2rem;
+    padding: 0 0.05rem;
+    line-height: 0.5rem;
+    background-color: #fff0c7; 
+    border-radius: 1rem;
+}
+.warn-box p .ico-q {
+    margin-right: 0.1rem;
+    vertical-align: text-bottom;
+    font-size: 0.28rem;
+    color: #ffa553;
+}
 
 /* 倒计时 */
 .ZCountdown{ font-size: 0.26rem;}

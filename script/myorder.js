@@ -1,6 +1,7 @@
 ﻿var redirect_uri = encodeURIComponent(location.href);
 var getOrdersUrl = xq.xqAPI + 'order/my/list';
 var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
+var tokenApiUrl = xq.xqAPI + 'token/create';
 
 var app = new Vue({
     el:'#myApp',
@@ -33,6 +34,7 @@ var app = new Vue({
             return statusClass;
         },
         getOrders:function(orderType){
+            $.showIndicator();
             getMyOrders(orderType);
         }
     }
@@ -60,6 +62,12 @@ function wechatAuth(){
         if(res.data.code == 200){
             app.wxOpenId = res.data.data[0].openId;
             app.wxAccessToken = res.data.data[0].accessToken;
+
+            sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
+            sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
+            sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
+            sessionStorage.setItem('sessionTimeStamp', new Date()*1);
+            
             creatToken();
         }else{
             $.toast(res.data.message);
@@ -87,7 +95,8 @@ function creatToken(){
         if(res.data.code == 200){
             app.accessToken = res.data.data[0].accessToken;
             sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
-            getMyOrders(0);
+            $.showIndicator();
+            getMyOrders(1);
         }else{
             $.toast(res.data.message);
         }
@@ -113,6 +122,7 @@ function getMyOrders(orderType){
 
     axios.get(getOrdersUrl,{params:orderListPara}).then(function(res){
         if(res.data.code == 200){
+            $.hideIndicator();
             console.log(res.data.data);
             app.orderList = res.data.data;
         }else{
@@ -124,10 +134,16 @@ function getMyOrders(orderType){
 }
 
 function getUrlCode(){
-    var wxAccessToken = sessionStorage.setItem('wxAccessToken');
-    var wxOpenId = sessionStorage.setItem('wxOpenId');
-    
-    if(accessToken){
+    var wxAccessToken = sessionStorage.getItem('wxAccessToken');
+    var wxOpenId = sessionStorage.getItem('wxOpenId');
+    var sessionTimeStamp = sessionStorage.getItem('sessionTimeStamp');
+    var expiresIn = sessionStorage.getItem('expiresIn');
+
+    var expiresTime = (new Date()*1) - parseInt(sessionTimeStamp,10);
+    expiresTime = expiresTime/1000 ;
+
+    //有 wxAccessToken 且在有效期内（expiresIn:7200秒）
+    if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
         app.wxAccessToken = wxAccessToken;
         app.wxOpenId = wxOpenId;
         creatToken();

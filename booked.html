@@ -38,7 +38,7 @@
                         <a href="#">
                             <div class="txt">
                                <!--  <span>请选择</span> -->
-                               <input type="text" id='datetime-picker'>
+                               <input type="text" readonly id='datetime-picker'>
                             </div>
                             <i class="ico-tri-right"></i>
                         </a>
@@ -61,7 +61,7 @@
                             <i class="ico-tri-right"></i>
                         </a> -->
                         <div class="txt">
-                           <input type="text" placeholder="请输入" :value="classAddress">
+                           <input type="text" placeholder="请输入" v-model="classAddress">
                         </div>
                     </li>
                     <li class="list-item">
