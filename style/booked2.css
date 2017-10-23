@@ -44,7 +44,7 @@ body.with-panel-left-cover .panel-left{
     transform: translate3d(-100%, 0, 0);
     transition:all 0.5s ease-in-out;
 }
-.panelClose { transform: translate3d(0, 0, 0);}
+body.with-panel-left-cover .panelClose { transform: translate3d(0, 0, 0);}
 .select-type .content-box .tab-box{ width: 100%; padding-top: .12rem; height: .75rem; border-bottom:1px solid #e7e7e7; font-size: 0; background-color: #fff; box-sizing:border-box;} 
 .select-type .tab-box .item-tab{ display: inline-block; height: .5rem; line-height: .5rem; width: 49%; font-size: .22rem; text-align: center;} 
 .select-type .tab-box .item-tab:first-child{ border-right: 1px solid #e7e7e7;} 

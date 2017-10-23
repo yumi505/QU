@@ -113,3 +113,6 @@ body{ background-color: #f1f1f1;}
 /*----------------- 组件样式重置--------------------------- */
 /* 警告弹窗 */
 body .toast { height: 0.6rem; line-height: 0.6rem; font-size: 0.28rem; padding: 0 0.3rem; }
+body .preloader-indicator-modal { padding: 0.1rem; margin-left: -.45rem; margin-top: -.45rem; background: rgba(0, 0, 0, 0.6);}
+body .preloader-indicator-modal .preloader { padding: 0.1rem; width: .7rem;
+    height: .7rem;}

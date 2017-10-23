@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
     <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
     <!-- 页面调用CSS -->
-    <link rel="stylesheet" type="text/css" href="./style/booked.css">
+    <link rel="stylesheet" type="text/css" href="./style/booked2.css">
 </head>
 <body>
     <div id="myApp" v-cloak class="page-group">
@@ -26,11 +26,11 @@
                 <ul class="list-ul box-shadow">
                     <li class="list-item">
                         <label class="tit">兴趣名称</label>
-                        <a href="javascript:;" @click="selectCourseType">
+                        <a href="javascript:;">
                             <div class="txt">
                                 <span :class="{'txt-gray': selectedCourseTxt=='请选择'}" v-text="selectedCourseTxt">请选择</span>
                             </div>
-                            <i class="ico-tri-right"></i>
+                            <i class="ico-tri-right open-panel" data-panel="#panel-right-hobby" @click="openHobbyPanel"></i>
                         </a>
                     </li>
                     <li class="list-item">
@@ -85,7 +85,8 @@
             </div>
         </div>
         <!-- 选择课程类型 -->
-        <div :class="['select-type',{'showSelectType':ifShowType}]">
+        <!-- <div :class="['select-type',{'showSelectType':ifShowType}]"> -->
+        <div :class="['select-type panel-left panel-cover',{'panelClose':ispanelClose}]" id="panel-right-hobby">
             <div class="header">
                 <span class="icon-head-back"><a href="#"></a></span>
                 <p class="text-head-title">拼班课程</p>

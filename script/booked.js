@@ -37,6 +37,8 @@ $(function(){
         value: dateTime.split('-'),
         inputReadOnly:false
     });
+
+    $.init();
 });
 
 
@@ -45,9 +47,9 @@ var app = new Vue({
     data:{
         class_type:'teacher',
         person_num:'person_one',
-        ifShowType:false,
         selectedCategryIndex:0,
         selectedCourse:'',
+        ispanelClose:false,
         courseType:[
             {
              className:'舞蹈',
@@ -104,6 +106,9 @@ var app = new Vue({
         wxAccessToken:''
     },
     methods:{
+        openHobbyPanel:function(){
+            this.ispanelClose = false;  
+        },
         //授课方式-老师上门 or 家长上门
         classType:function(type){
             this.class_type = type == 1?'teacher':'parents';
@@ -124,10 +129,6 @@ var app = new Vue({
             }
             this.studentCount = num;
         },
-        //选择课程分类
-        selectCourseType:function(){
-            this.ifShowType = true;
-        },
         //课程分类切换
         changeType:function(i,all){
             this.selectedCategryIndex = i;
@@ -139,7 +140,7 @@ var app = new Vue({
             all[i].isActive = true;
         },
         selectType:function(item,all){
-            this.ifShowType = false;
+            this.ispanelClose = true;
 
             all.forEach(function(parent,i){
                 parent.childs.forEach(function(child,i){
