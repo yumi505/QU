@@ -17,19 +17,19 @@ var app = new Vue({
             switch(param){
                 case 1:/*待老师接单、已完成：待开班（灰色）  */
                     statusClass = 'dkb';
-                break;
+                    break;
                 case 2:/* 待选择老师、待支付：待支付（黄色）*/
                     statusClass = 'dzf';
-                break;
+                    break;
                 case 3: /* 待上课、上课中：上课中（绿色）*/
                     statusClass = 'skz';
-                break;
+                    break;
                 case 4: /* 已完成*/
                     statusClass = 'ywc';
-                break; 
+                    break;
                 case 5: /* 已取消：已取消（红色）*/
                     statusClass = 'yqx';
-                break; 
+                    break;
             }
             return statusClass;
         },
@@ -67,13 +67,13 @@ function wechatAuth(){
             sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
             sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
             sessionStorage.setItem('sessionTimeStamp', new Date()*1);
-            
+
             creatToken();
         }else{
             $.toast(res.data.message);
         }
     }).catch(function(err){
-        console.log(err)
+        console.log(err);
     });
 }
 
@@ -153,9 +153,9 @@ function getUrlCode(){
             app.wxCode = wechatCode;
             wechatAuth();
         }else{
-          wechatLinkJump();  
-        } 
-    }  
+          wechatLinkJump();
+        }
+    }
 }
 
 getUrlCode();

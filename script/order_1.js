@@ -59,8 +59,11 @@
     });
 })(jQuery);
 
+var redirect_uri = encodeURIComponent(location.href);
 var orderDetailUrl = xq.xqAPI + 'parents/order/oto/detail';
 var cancelOrderUrl = xq.xqAPI + 'parents/order/oto/cancel';
+var tokenApiUrl = xq.xqAPI + 'token/create';
+var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
 
 var app = new Vue({
     el:'#myApp',
@@ -74,7 +77,11 @@ var app = new Vue({
         orderStatusValue:0,
         recommendNum:66,
         orderTime:'',
-        cancelReason:''
+        cancelReason:'',
+        wxAccessToken:'',
+        wxOpenId:'',
+        accessToken:'',
+        wxCode:''
     },
     methods:{
         markStatus:function(param){
@@ -91,10 +98,10 @@ var app = new Vue({
                 break;
                 case 4: /* 已完成*/
                     statusClass = 'ywc';
-                break; 
+                break;
                 case 5: /* 已取消：已取消（红色）*/
                     statusClass = 'yqx';
-                break; 
+                break;
             }
             return statusClass;
         },
@@ -128,6 +135,13 @@ var app = new Vue({
         }
     }
 });
+
+function wechatLinkJump(){
+    var wechatLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+xq.gzhAppId+"&redirect_uri="+
+    redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+
+    location.href = wechatLink;
+}
 
 function timeCountDown(orderTime){
     $.ZCountdown({
@@ -163,7 +177,7 @@ function getOrderDetail(){
             if(res.data.data[0].recommendNum){
                 app.recommendNum = res.data.data[0].recommendNum;
             }
-             
+
             timeCountDown(res.data.data[0].orderTime);
         }else{
             $.toast(res.data.message);
@@ -196,5 +210,88 @@ function cancelOrder(){
     });
 }
 
-getOrderDetail();
+function creatToken(){
+    var tokenPara = {
+        "userName": app.wxOpenId,
+        "password": app.wxAccessToken,
+        "validType": 3, //Auth验证
+        "authType": 1, //微信认证
+        "appSecret": xq.app_secret,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+
+    var sign = xq.signCoputed(tokenPara);
+    tokenPara.sign = sign;
+
+    axios.post(tokenApiUrl,tokenPara).then(function(res){
+        if(res.data.code == 200){
+            app.accessToken = res.data.data[0].accessToken;
+            sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
+            $.showIndicator();
+            getOrderDetail();
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
+function wechatAuth(){
+    var wechatAuthPara = {
+        "appSecret": xq.app_secret,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId,
+        "code": app.wxCode
+    };
+
+    var sign = xq.signCoputed(wechatAuthPara);
+    wechatAuthPara.sign = sign;
+
+    axios.post(wxAuthorUrl,wechatAuthPara).then(function(res){
+        if(res.data.code == 200){
+            app.wxOpenId = res.data.data[0].openId;
+            app.wxAccessToken = res.data.data[0].accessToken;
+
+            sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
+            sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
+            sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
+            sessionStorage.setItem('sessionTimeStamp', new Date()*1);
+
+            creatToken();
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
+function getUrlCode(){
+    var wxAccessToken = sessionStorage.getItem('wxAccessToken');
+    var wxOpenId = sessionStorage.getItem('wxOpenId');
+    var sessionTimeStamp = sessionStorage.getItem('sessionTimeStamp');
+    var expiresIn = sessionStorage.getItem('expiresIn');
+
+    var expiresTime = (new Date()*1) - parseInt(sessionTimeStamp,10);
+    expiresTime = expiresTime/1000 ;
+
+    //有 wxAccessToken 且在有效期内（expiresIn:7200秒）
+    if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
+        app.wxAccessToken = wxAccessToken;
+        app.wxOpenId = wxOpenId;
+        creatToken();
+    }else{
+        var wechatCode = xq.getUrlParam('code');
+        if(wechatCode){
+            app.wxCode = wechatCode;
+            wechatAuth();
+        }else{
+          wechatLinkJump();
+        }
+    }
+}
+
+getUrlCode();
 
