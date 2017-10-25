@@ -201,6 +201,9 @@ function cancelOrder(){
     axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
     axios.post(cancelOrderUrl,cancelParam).then(function(res){
         if(res.data.code == 200){
+            setTimeout(function(){
+                 location.reload();
+            },1500);
             $.toast('订单已取消');
         }else{
             $.toast(res.data.message);
@@ -228,7 +231,7 @@ function creatToken(){
         if(res.data.code == 200){
             app.accessToken = res.data.data[0].accessToken;
             sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
-            $.showIndicator();
+            //$.showIndicator();
             getOrderDetail();
         }else{
             $.toast(res.data.message);
