@@ -119,3 +119,10 @@
   2. booked2.css
 
   3. myorder 请求报错的问题
+
+
+  2017-10-29：
+
+  1. booked 使用 light7 框架
+
+  2. 服务器上传 light7 失败
