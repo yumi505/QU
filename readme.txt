@@ -125,4 +125,6 @@
 
   1. booked 使用 light7 框架
 
-  2. 服务器上传 light7 失败
+  2. booked 服务器上传 light7 失败
+
+  3. script/booked.js  ,  style/booked.css , style/common.css  上传失败
