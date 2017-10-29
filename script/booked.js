@@ -345,5 +345,5 @@ function getUrlCode(){
     }
 }
 
-getUrlCode();
+//getUrlCode();
 

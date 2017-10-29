@@ -116,3 +116,10 @@ body .toast { height: 0.6rem; line-height: 0.6rem; font-size: 0.28rem; padding: 
 body .preloader-indicator-modal { padding: 0.1rem; margin-left: -.45rem; margin-top: -.45rem; background: rgba(0, 0, 0, 0.6);}
 body .preloader-indicator-modal .preloader { padding: 0.1rem; width: .7rem;
     height: .7rem;}
+
+body .picker-columns{ height: 6rem;}    
+body .bar{ height: .6rem;}    
+body .bar .button-link{ height: .6rem; line-height: 0.6rem; font-size: 0.26rem; color: #69b93a;}    
+body .bar+.picker-itemsk{ height: 5.4rem; }
+body .picker-items{ font-size: 0.3rem; }   
+body .picker-center-highlight{ margin-top: -3px; }   
