@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" type="text/css" href="./style/common.css">
     <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
-    <link rel="stylesheet" type="text/css" href="./style/lib/sm.css">
+    <link rel="stylesheet" type="text/css" href="./style/lib/light7.min.css">
     <!-- 页面调用CSS -->
     <link rel="stylesheet" type="text/css" href="./style/booked2.css">
 </head>
@@ -26,11 +26,11 @@
                 <ul class="list-ul box-shadow">
                     <li class="list-item">
                         <label class="tit">兴趣名称</label>
-                        <a href="javascript:;">
+                        <a href="javascript:;" class="open-panel" data-panel="#panel-right-hobby">
                             <div class="txt">
                                 <span :class="{'txt-gray': selectedCourseTxt=='请选择'}" v-text="selectedCourseTxt">请选择</span>
                             </div>
-                            <i class="ico-tri-right open-panel" data-panel="#panel-right-hobby" @click="openHobbyPanel"></i>
+                            <i class="ico-tri-right"></i>
                         </a>
                     </li>
                     <li class="list-item">
@@ -85,8 +85,7 @@
             </div>
         </div>
         <!-- 选择课程类型 -->
-        <!-- <div :class="['select-type',{'showSelectType':ifShowType}]"> -->
-        <div :class="['select-type panel-left panel-cover',{'panelClose':ispanelClose}]" id="panel-right-hobby">
+        <div class="select-type panel panel-left panel-revea" id="panel-right-hobby">
             <div class="header">
                 <span class="icon-head-back"><a href="#"></a></span>
                 <p class="text-head-title">拼班课程</p>
@@ -110,7 +109,7 @@
                     <div class="menu-two">
                         <ul class="ul-box">
                             <!-- <li class="item-li">全部课程</li> -->
-                            <li :class="['item-li',{'selected':item.selected}]"
+                            <li :class="['item-li close-panel',{'selected':item.selected}]"
                                 v-for="item in selectedCategrys"
                                 v-text="item.hobbyName"
                                 @click="selectType(item,newCourseType)"></li>
@@ -120,7 +119,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
+    <script type="text/javascript" src="./script/lib/jquery-3.2.1.min.js"></script>
     <script>
         var viewportFix = function() {
             var v_t;
@@ -150,11 +149,11 @@
         viewportFix();
     </script>
     <!-- 页面调用JS -->
-    <script type="text/javascript" src="./script/lib/vue-2.1.10.js"></script>
+    <script type="text/javascript" src="./script/lib/vue.min.js"></script>
     <script type="text/javascript" src="./script/lib/axios.min.js"></script>
-    <script type="text/javascript" src="./script/lib/sm.min.js"></script>
+    <script type="text/javascript" src="./script/lib/light7.min.js"></script>
     <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
     <script type="text/javascript" src="./script/common.js"></script>
-    <script type="text/javascript" src="./script/booked.js?v=201710221534"></script>
+    <script type="text/javascript" src="./script/booked.js"></script>
 </body>
 </html>

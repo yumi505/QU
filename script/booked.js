@@ -49,7 +49,6 @@ var app = new Vue({
         person_num:'person_one',
         selectedCategryIndex:0,
         selectedCourse:'',
-        ispanelClose:false,
         courseType:[
             {
              className:'舞蹈',
@@ -106,9 +105,6 @@ var app = new Vue({
         wxAccessToken:''
     },
     methods:{
-        openHobbyPanel:function(){
-            this.ispanelClose = false;  
-        },
         //授课方式-老师上门 or 家长上门
         classType:function(type){
             this.class_type = type == 1?'teacher':'parents';
@@ -140,8 +136,6 @@ var app = new Vue({
             all[i].isActive = true;
         },
         selectType:function(item,all){
-            this.ispanelClose = true;
-
             all.forEach(function(parent,i){
                 parent.childs.forEach(function(child,i){
                     //追加的属性，用来控制分类选中着色
