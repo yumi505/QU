@@ -178,7 +178,7 @@ function getOrderDetail(){
                 app.recommendNum = res.data.data[0].recommendNum;
             }
 
-            timeCountDown(res.data.data[0].orderTime);
+            timeCountDown(res.data.data[0].endTime);
         }else{
             $.toast(res.data.message);
         }

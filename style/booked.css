@@ -55,7 +55,7 @@ body.with-panel-left-cover .panel-left{
 .select-type .main-box .menu-two{ -ms-flex: 1; flex: 1; background-color: #fff; padding:0 0.24rem 0 0.6rem; overflow-y: auto;}
 
 .select-type .menu-one .ul-box{ font-size: .22rem; text-align: center; }
-.select-type .menu-one .ul-box .item-li{ width: 100%; height: 1rem; line-height: 1rem; border-bottom:1px solid #e7e7e7;}
+.select-type .menu-one .ul-box .item-li{ width: 100%; height: 1rem; line-height: 1rem; border-bottom:1px solid #e7e7e7; color:#333;}
 .select-type .menu-one .ul-box .item-li.active{ background-color: #fff;}
 
 .select-type .menu-two .ul-box{ font-size: .22rem; }

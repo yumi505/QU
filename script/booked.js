@@ -321,7 +321,7 @@ function publishOrder(param){
 }
 
 function getUrlCode(){
-    var wxAccessToken = sessionStorage.getItem('wxAccessToken');
+    /*var wxAccessToken = sessionStorage.getItem('wxAccessToken');
     var wxOpenId = sessionStorage.getItem('wxOpenId');
     var sessionTimeStamp = sessionStorage.getItem('sessionTimeStamp');
     var expiresIn = sessionStorage.getItem('expiresIn');
@@ -334,7 +334,7 @@ function getUrlCode(){
         app.wxAccessToken = wxAccessToken;
         app.wxOpenId = wxOpenId;
         creatToken();
-    }else{
+    }else{*/
         var wechatCode = xq.getUrlParam('code');
         if(wechatCode){
             app.wxCode = wechatCode;
@@ -342,8 +342,8 @@ function getUrlCode(){
         }else{
           wechatLinkJump();  
         } 
-    }
+    //}
 }
 
-//getUrlCode();
+getUrlCode();
 

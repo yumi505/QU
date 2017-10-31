@@ -121,5 +121,5 @@ body .picker-columns{ height: 6rem;}
 body .bar{ height: .6rem;}    
 body .bar .button-link{ height: .6rem; line-height: 0.6rem; font-size: 0.26rem; color: #69b93a;}    
 body .bar+.picker-itemsk{ height: 5.4rem; }
-body .picker-items{ font-size: 0.3rem; }   
-body .picker-center-highlight{ margin-top: -3px; }   
+body .picker-items{ font-size: 0.3rem; }     
+body .bar+.picker-items{ height: 5.4rem;}
