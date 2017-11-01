@@ -1,4 +1,5 @@
-﻿.tabs { margin: .24rem .2rem 0; height: auto; overflow: hidden; background-color: #fff; border-radius: 5px; border: 1px solid #ddd; }
+﻿.my-orders{ top:1.76rem; height: calc(100% - 2rem);}
+.tabs { margin: 0 .2rem 0; height: auto; overflow: hidden; background-color: #fff; border-radius: 5px; border: 1px solid #ddd; }
 .content-block { margin: 0; padding: 0; }
 .content-block .list-box { position: relative; color: #777; padding-left: .26rem; padding-bottom: .22rem; border-bottom: 1px solid #e3e3e3; overflow: hidden; }
 .content-block .list-box a{  color: #777;}

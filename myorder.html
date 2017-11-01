@@ -27,50 +27,52 @@
                     <a href="#tab1" class="tab-link active button" @click="getOrders(1)">进行中</a>
                     <a href="#tab2" class="tab-link button" @click="getOrders(3)">已完成</a>
                 </div>
-                <div class="tabs">
-                    <div id="tab1" class="tab active">
-                        <div class="content-block">
-                            <div class="list-box" v-for="orderItem in orderList">
-                                <a external :href="'order_1.html?orderId='+orderItem.orderId">
-                                    <h3 class="tit" v-text="orderItem.title"></h3>
-                                    <div class="txt">
-                                        <span class="kc" v-text="orderItem.hobbyName"></span>
-                                        <span class="xs" v-text="orderItem.orderType"></span>
-                                        <span class="sx">|</span>
-                                        <span class="ls">共<span v-text="orderItem.studentCount"></span>人</span>
-                                    </div>
-                                    <p class="add">
-                                        <i class="ico-add-q"></i>
-                                        <span v-text="orderItem.address?orderItem.address:'家长上门'"></span>
-                                    </p>
-                                    <span :class="['ico-remark-q',markStatus(orderItem.orderStatusValue)]">
-                                        <i class="t" v-text="orderItem.orderStatus"></i>
-                                    </span>
-                                    <span class="price" style="display:none;">￥688</span>
-                                </a>
+                <div class="mod-scroll my-orders">
+                    <div class="tabs">
+                        <div id="tab1" class="tab active">
+                            <div class="content-block">
+                                <div class="list-box" v-for="orderItem in orderList">
+                                    <a external :href="'order_1.html?orderId='+orderItem.orderId">
+                                        <h3 class="tit" v-text="orderItem.title"></h3>
+                                        <div class="txt">
+                                            <span class="kc" v-text="orderItem.hobbyName"></span>
+                                            <span class="xs" v-text="orderItem.orderType"></span>
+                                            <span class="sx">|</span>
+                                            <span class="ls">共<span v-text="orderItem.studentCount"></span>人</span>
+                                        </div>
+                                        <p class="add">
+                                            <i class="ico-add-q"></i>
+                                            <span v-text="orderItem.address?orderItem.address:'家长上门'"></span>
+                                        </p>
+                                        <span :class="['ico-remark-q',markStatus(orderItem.orderStatusValue)]">
+                                            <i class="t" v-text="orderItem.orderStatus"></i>
+                                        </span>
+                                        <span class="price" style="display:none;">￥688</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="tab2" class="tab">
-                        <div class="content-block">
-                            <div class="list-box" v-for="orderItem in orderList">
-                                <a external :href="'order_1.html?orderId='+orderItem.orderId">
-                                    <h3 class="tit" v-text="orderItem.title"></h3>
-                                    <div class="txt">
-                                        <span class="kc" v-text="orderItem.hobbyName"></span>
-                                        <span class="xs" v-text="orderItem.orderType"></span>
-                                        <span class="sx">|</span>
-                                        <span class="ls">共<span v-text="orderItem.studentCount"></span>人</span>
-                                    </div>
-                                    <p class="add">
-                                        <i class="ico-add-q"></i>
-                                        <span v-text="orderItem.address?orderItem.address:'家长上门'"></span>
-                                    </p>
-                                    <span :class="['ico-remark-q',markStatus(orderItem.orderStatusValue)]">
-                                        <i class="t" v-text="orderItem.orderStatus"></i>
-                                    </span>
-                                    <span class="price" style="display:none;">￥688</span>
-                                </a>
+                        <div id="tab2" class="tab">
+                            <div class="content-block">
+                                <div class="list-box" v-for="orderItem in orderList">
+                                    <a external :href="'order_1.html?orderId='+orderItem.orderId">
+                                        <h3 class="tit" v-text="orderItem.title"></h3>
+                                        <div class="txt">
+                                            <span class="kc" v-text="orderItem.hobbyName"></span>
+                                            <span class="xs" v-text="orderItem.orderType"></span>
+                                            <span class="sx">|</span>
+                                            <span class="ls">共<span v-text="orderItem.studentCount"></span>人</span>
+                                        </div>
+                                        <p class="add">
+                                            <i class="ico-add-q"></i>
+                                            <span v-text="orderItem.address?orderItem.address:'家长上门'"></span>
+                                        </p>
+                                        <span :class="['ico-remark-q',markStatus(orderItem.orderStatusValue)]">
+                                            <i class="t" v-text="orderItem.orderStatus"></i>
+                                        </span>
+                                        <span class="price" style="display:none;">￥688</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
