@@ -281,11 +281,11 @@ function getUrlCode(){
     expiresTime = expiresTime/1000 ;
 
     //有 wxAccessToken 且在有效期内（expiresIn:7200秒）
-    if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
+   /* if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
         app.wxAccessToken = wxAccessToken;
         app.wxOpenId = wxOpenId;
         creatToken();
-    }else{
+    }else{*/
         var wechatCode = xq.getUrlParam('code');
         if(wechatCode){
             app.wxCode = wechatCode;
@@ -293,7 +293,7 @@ function getUrlCode(){
         }else{
           wechatLinkJump();
         }
-    }
+    //}
 }
 
 getUrlCode();
