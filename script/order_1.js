@@ -22,7 +22,7 @@
                     var end_time = new Date(endTime).getTime(),
                         sys_second = (end_time - new Date().getTime()) / 1000;
                     var timer = setInterval(function() {
-                        var html = '';
+                        var html = "";
                         if (sys_second > 2) {
                             sys_second -= 1;
                             var day = Math.floor(sys_second / 3600 / 24);
@@ -33,16 +33,16 @@
                             var second = Math.floor(sys_second % 60);
                             second = second < 10 ? '0' + second : second;
                             if (opts.showDay && (day > 0 || opts.saveDay)) {
-                                html += '<span class="type type-day"><em class="day">' + day + '</em><span class="unit">' + opts.txtDay + '</span></span>';
+                                html += "<span class='type type-day'><em class='day'>" + day + "</em><span class='unit'>" + opts.txtDay + "</span></span>";
                             };
                             if (opts.showHour) {
-                                html += '<span class="type type-hour"><em class="hour">' + hour + '</em><span class="unit">' + opts.txtHour + '</span></span>';
+                                html += "<span class='type type-hour'><em class='hour'>" + hour + "</em><span class='unit'>" + opts.txtHour + "</span></span>";
                             };
                             if (opts.showMin) {
-                                html += '<span class="type type-min"><em class="min">' + minute + '</em><span class="unit">' + opts.txtMin + '</span></span>';
+                                html += "<span class='type type-min'><em class='min'>" + minute + "</em><span class='unit'>" + opts.txtMin + "</span></span>";
                             };
                             if (opts.showSec) {
-                                html += '<span class="type type-sec"><em class="sec">' + second + '</em><span class="unit">' + opts.txtSec + '</span></span>';
+                                html += "<span class='type type-sec'><em class='sec'>" + second + "</em><span class='unit'>" + opts.txtSec + "</span></span>";
                             };
                             obj.html(html);
                         } else {
@@ -82,7 +82,8 @@ var app = new Vue({
         wxAccessToken:'',
         wxOpenId:'',
         accessToken:'',
-        wxCode:''
+        wxCode:'',
+        endTime:''
     },
     methods:{
         markStatus:function(param){
@@ -134,7 +135,7 @@ var app = new Vue({
             }
             return time;
         }
-    }
+    } 
 });
 
 function wechatLinkJump(){
@@ -144,9 +145,9 @@ function wechatLinkJump(){
     location.href = wechatLink;
 }
 
-function timeCountDown(orderTime){
+function timeCountDown(dom,orderTime){
     $.ZCountdown({
-        className: '.ZCountdown',
+        className: dom,
         endTime: orderTime
     });
 }
@@ -174,6 +175,7 @@ function getOrderDetail(){
             app.orderStatusValue = res.data.data[0].orderStatusValue;
             app.orderTime = res.data.data[0].orderTime;
             app.cancelReason = res.data.data[0].cancelReason;
+            app.endTime = res.data.data[0].endTime;
 
             if(res.data.data[0].recommendNum){
                 app.recommendNum = res.data.data[0].recommendNum;
@@ -182,7 +184,13 @@ function getOrderDetail(){
                 app.receiveList = res.data.data[0].receiveList;
             }
 
-            timeCountDown(res.data.data[0].endTime);
+            setTimeout(function(){
+                if(app.orderStatusValue == 1){
+                    timeCountDown('.ZCountdown1',app.endTime);
+                }else if(app.orderStatusValue == 2){
+                    timeCountDown('.ZCountdown2',app.endTime);
+                }
+            },500);
         }else{
             $.toast(res.data.message);
         }
