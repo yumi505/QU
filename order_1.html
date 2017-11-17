@@ -23,12 +23,8 @@
                 <span class="icon-head-tool"></span>
             </div>
             <div class="content-box">
-                <template v-if="orderStatusValue ==5">
-                    <div class="warn-box canceled">
-                        <p><i class="ico-q ico-gantan-q"></i><span v-text="cancelReason"></span></p>
-                    </div>
-                </template>
-                <template v-else>
+                <!-- 待接单 -->
+                <template v-if="orderStatusValue == 1">
                     <div class="warn-box">
                         <div class="l-box hourglass">
                             <i class="ico-q ico-hourglass-q"></i>
@@ -40,31 +36,75 @@
                     </span>等待老师接单！</p>
                         </div>
                     </div>
-                </template>
-                <div class="tabs">
-                    <div id="tab1" class="tab active">
-                        <div class="content-block">
-                            <!-- 待选择老师 -->
-                            <div class="list-box">
-                                <h3 class="tit" v-text="bookTime"></h3>
-                                <div class="txt">
-                                    <span class="kc" v-text="hobbyName"></span>
-                                    <span class="xs" v-text="classesType"></span>
-                                    <span class="sx">|</span>
-                                    <span class="ls">共<span v-text="studentCount"></span>人</span>
+                    <div class="tabs">
+                        <div id="tab1" class="tab active">
+                            <div class="content-block">
+                                <!-- 待老师接单 -->
+                                <div class="list-box">
+                                    <h3 class="tit" v-text="bookTime"></h3>
+                                    <div class="txt">
+                                        <span class="kc" v-text="hobbyName"></span>
+                                        <span class="xs" v-text="classesType"></span>
+                                        <span class="sx">|</span>
+                                        <span class="ls">共<span v-text="studentCount"></span>人</span>
+                                    </div>
+                                    <p class="add"><i class="ico-add-q"></i><span v-text="address?address:'家长上门'"></span></p>
+                                    <span :class="['ico-remark-q',markStatus(orderStatusValue)]">
+                                        <i class="t" v-text="orderStatus"></i>
+                                    </span>
+                                    <span class="price" style="display:none;">￥688</span>
                                 </div>
-                                <p class="add"><i class="ico-add-q"></i><span v-text="address?address:'家长上门'"></span></p>
-                                <span :class="['ico-remark-q',markStatus(orderStatusValue)]">
-                                    <i class="t" v-text="orderStatus"></i>
-                                </span>
-                                <span class="price" style="display:none;">￥688</span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="btn-box" v-if="orderStatusValue !=5">
-                    <a href="javascript:;" @click="cancelOrder">取消订单</a>
-                </div>
+                    <div class="btn-box">
+                        <a href="javascript:;" @click="cancelOrder">取消订单</a>
+                    </div>
+                </template>
+                <!-- 已接单 -->
+                <template v-if="orderStatusValue == 2">
+                    <div class="warn-box">
+                        <div class="l-box hourglass">
+                            <i class="ico-q ico-hourglass-q"></i>
+                        </div>
+                        <div class="r-box">
+                            <p>已有<span class="t-num"><span v-text="receiveList.length"></span></span>位老师接单</p>
+                            <p>您还有<span class="ZCountdown" style="">
+                        <span class="type type-day"><em class="day">0</em><span class="unit">天</span></span><span class="type type-hour"><em class="hour">00</em><span class="unit">时</span></span><span class="type type-min"><em class="min">00</em><span class="unit">分</span></span><span class="type type-sec"><em class="sec">00</em><span class="unit">秒</span></span>
+                    </span>来选择其中一位老师！</p>
+                        </div>
+                    </div>
+                    <ul class="tc-ul">
+                        <li class="tc-li" v-for="teacherItem in receiveList">
+                            <div class="l">
+                                <img :src="teacherItem.avatarUrl" alt="教师图像" />
+                            </div>
+                            <div class="r">
+                                <h3>
+                                    <span class="name" v-text="teacherItem.trueName"></span>
+                                    <span class="score" v-text="teacherItem.score + '分'"></span>
+                                </h3>
+                                <p>
+                                    <span v-text="teacherItem.identityType"></span>
+                                    <span>|</span>
+                                    <span v-text="'累计授课'+teacherItem.totalClassesDuration+'小时'"></span>
+                                </p>
+                                <span class="price" v-text="'￥' + teacherItem.price"></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="btn-box">
+                        <a href="javascript:;" @click="cancelOrder">取消订单</a>
+                    </div>
+                </template>
+                <!-- 家长已取消 -->
+                <template v-if="orderStatusValue == 5">
+                    <div class="warn-box canceled">
+                        <p><i class="ico-q ico-gantan-q"></i><span v-text="cancelReason"></span></p>
+                    </div>
+                </template>
+                
+                
             </div>
         </div>
     </div>

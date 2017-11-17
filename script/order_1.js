@@ -76,6 +76,7 @@ var app = new Vue({
         orderStatus:'',
         orderStatusValue:0,
         recommendNum:66,
+        receiveList:[],
         orderTime:'',
         cancelReason:'',
         wxAccessToken:'',
@@ -176,6 +177,9 @@ function getOrderDetail(){
 
             if(res.data.data[0].recommendNum){
                 app.recommendNum = res.data.data[0].recommendNum;
+            }
+            if(res.data.data[0].receiveList){
+                app.receiveList = res.data.data[0].receiveList;
             }
 
             timeCountDown(res.data.data[0].endTime);
