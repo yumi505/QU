@@ -73,23 +73,27 @@
                         </div>
                     </div>
                     <ul class="tc-ul">
-                        <li class="tc-li" v-for="teacherItem in receiveList">
-                            <div class="l">
-                                <img :src="teacherItem.avatarUrl" alt="教师图像" />
-                            </div>
-                            <div class="r">
-                                <h3>
-                                    <span class="name" v-text="teacherItem.trueName"></span>
-                                    <span class="score" v-text="teacherItem.score + '分'"></span>
-                                </h3>
-                                <p>
-                                    <span v-text="teacherItem.identityType"></span>
-                                    <span>|</span>
-                                    <span v-text="'累计授课'+teacherItem.totalClassesDuration+'小时'"></span>
-                                </p>
-                                <span class="price" v-text="'￥' + teacherItem.price"></span>
-                            </div>
-                        </li>
+                        <template v-for="teacherItem in receiveList">
+                            <a external :href="'teacher.html?tid='+teacherItem.teacherId">
+                                <li class="tc-li">
+                                    <div class="l">
+                                        <img :src="teacherItem.avatarUrl" alt="教师图像" />
+                                    </div>
+                                    <div class="r">
+                                        <h3>
+                                            <span class="name" v-text="teacherItem.trueName"></span>
+                                            <span class="score" v-text="teacherItem.score + '分'"></span>
+                                        </h3>
+                                        <p>
+                                            <span v-text="teacherItem.identityType"></span>
+                                            <span>|</span>
+                                            <span v-text="'累计授课'+teacherItem.totalClassesDuration+'小时'"></span>
+                                        </p>
+                                        <span class="price" v-text="'￥' + teacherItem.price"></span>
+                                    </div>
+                                </li>
+                            </a>
+                        </template> 
                     </ul>
                     <div class="btn-box">
                         <a href="javascript:;" @click="cancelOrder">取消订单</a>
@@ -104,8 +108,6 @@
             </div>
         </div>
     </div>
-
-
     <!-- 页面调用JS -->
     <script type="text/javascript" src="./script/lib/zepto.min.js"></script>
     <script type="text/javascript" src="./script/lib/jquery.min.js"></script>
