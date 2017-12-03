@@ -24,15 +24,16 @@
             </div>
             <div class="content-box">
                 <!-- 待接单 -->
-                <template v-if="orderStatusValue == 1">
+                <template v-if="receiveList.length == 0">
                     <div class="warn-box">
                         <div class="l-box hourglass">
                             <i class="ico-q ico-hourglass-q"></i>
                         </div>
                         <div class="r-box">
-                            <p>我们已经将您的课程需求推送给<span class="t-num"><span v-text="recommendNum"></span></span>位老师</p>
-                            <p>您还有<span class="ZCountdown1"></span>
-                    </span>等待老师接单！</p>
+                            <p>我们已经将您的课程需求推送给
+                                <span class="t-num"><span v-text="getRandom"></span></span>位老师
+                            </p>
+                            <p>您还有<span class="ZCountdown1"></span>等待老师接单！</p>
                         </div>
                     </div>
                     <div class="tabs">
@@ -48,8 +49,8 @@
                                         <span class="ls">共<span v-text="studentCount"></span>人</span>
                                     </div>
                                     <p class="add"><i class="ico-add-q"></i><span v-text="address?address:'家长上门'"></span></p>
-                                    <span :class="['ico-remark-q',markStatus(orderStatusValue)]">
-                                        <i class="t" v-text="orderStatus"></i>
+                                    <span :class="['ico-remark-q','dzf']">
+                                        <i class="t" v-text="'已接单'"></i>
                                     </span>
                                     <span class="price" style="display:none;">￥688</span>
                                 </div>
@@ -61,20 +62,22 @@
                     </div>
                 </template>
                 <!-- 已接单 -->
-                <template v-if="orderStatusValue == 2">
+                <template v-if="orderStatusValue == 1 && receiveList.length > 0">
                     <div class="warn-box">
                         <div class="l-box hourglass">
                             <i class="ico-q ico-hourglass-q"></i>
                         </div>
                         <div class="r-box">
-                            <p>已有<span class="t-num"><span v-text="receiveList.length"></span></span>位老师接单</p>
-                            <p>您还有<span class="ZCountdown2"></span>
-                    </span>来选择其中一位老师！</p>
+                            <p>已有
+                                <span class="t-num"><span v-text="receiveList.length"></span></span>位老师接单
+                            </p>
+                            <p>您还有<span class="ZCountdown2"></span>来选择其中一位老师！</p>
                         </div>
                     </div>
                     <ul class="tc-ul">
                         <template v-for="teacherItem in receiveList">
-                            <a external :href="'teacher.html?tid='+teacherItem.teacherId">
+                            <a external 
+                               :href="'teacher.html?tid='+teacherItem.teacherId+'&orderId='+orderId">
                                 <li class="tc-li">
                                     <div class="l">
                                         <img :src="teacherItem.avatarUrl" alt="教师图像" />
@@ -95,6 +98,49 @@
                             </a>
                         </template> 
                     </ul>
+                    <div class="btn-box">
+                        <a href="javascript:;" @click="cancelOrder">取消订单</a>
+                    </div>
+                </template>
+                <!-- 已选择老师待支付 -->
+                <template v-if="orderStatusValue == 4">
+                    <div class="warn-box">
+                        <div class="l-box hourglass">
+                            <i class="ico-q ico-hourglass-q"></i>
+                        </div>
+                        <div class="r-box">
+                            <p>已选择1位老师
+                            </p>
+                            <p>请您尽快完成支付！</p>
+                        </div>
+                    </div>
+                    <ul class="tc-ul">
+                        <template v-for="teacherItem in receiveList">
+                            <a external 
+                               :href="'teacher.html?tid='+teacherItem.teacherId+'&orderId='+orderId">
+                                <li class="tc-li">
+                                    <div class="l">
+                                        <img :src="teacherItem.avatarUrl" alt="教师图像" />
+                                    </div>
+                                    <div class="r">
+                                        <h3>
+                                            <span class="name" v-text="teacherItem.trueName"></span>
+                                            <span class="score" v-text="teacherItem.score + '分'"></span>
+                                        </h3>
+                                        <p>
+                                            <span v-text="teacherItem.identityType"></span>
+                                            <span>|</span>
+                                            <span v-text="'累计授课'+teacherItem.totalClassesDuration+'小时'"></span>
+                                        </p>
+                                        <span class="price" v-text="'￥' + teacherItem.price"></span>
+                                    </div>
+                                </li>
+                            </a>
+                        </template> 
+                    </ul>
+                    <div class="btn-tl-wrap">
+                        <a class="btn-tl btn-shadow" href="javascript:;" @click="gotoPay">立即支付</a>
+                    </div>
                     <div class="btn-box">
                         <a href="javascript:;" @click="cancelOrder">取消订单</a>
                     </div>

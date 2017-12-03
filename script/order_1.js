@@ -62,8 +62,12 @@
 var redirect_uri = encodeURIComponent(location.href);
 var orderDetailUrl = xq.xqAPI + 'parents/order/oto/detail';
 var cancelOrderUrl = xq.xqAPI + 'parents/order/oto/cancel';
+var payUrl = xq.xqAPI + 'order/wx/create';
 var tokenApiUrl = xq.xqAPI + 'token/create';
 var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
+
+var orderId = xq.getUrlParam('orderId');
+var selectTid = xq.getUrlParam('selectTid');
 
 var app = new Vue({
     el:'#myApp',
@@ -83,7 +87,8 @@ var app = new Vue({
         wxOpenId:'',
         accessToken:'',
         wxCode:'',
-        endTime:''
+        endTime:'',
+        orderId:orderId
     },
     methods:{
         markStatus:function(param){
@@ -109,6 +114,9 @@ var app = new Vue({
         },
         cancelOrder:function(){
             cancelOrder();
+        },
+        gotoPay:function(){
+           prePay();  
         }
     },
     computed:{
@@ -134,6 +142,12 @@ var app = new Vue({
 
             }
             return time;
+        },
+        getRandom:function(0, 100){
+            var r = Math.random() * (max - min);
+            var re = Math.round(r + min);
+            re = Math.max(Math.min(re, max), min)
+            return re;
         }
     } 
 });
@@ -154,7 +168,7 @@ function timeCountDown(dom,orderTime){
 
 function getOrderDetail(){
     var orderParam = {
-        "orderId":xq.getUrlParam('orderId'),
+        "orderId":app.orderId,
         "timestamp": new Date().getTime(),
         "appId": xq.appId
     };
@@ -181,7 +195,20 @@ function getOrderDetail(){
                 app.recommendNum = res.data.data[0].recommendNum;
             }
             if(res.data.data[0].receiveList){
-                app.receiveList = res.data.data[0].receiveList;
+                var teacherList = res.data.data[0].receiveList;
+                if(selectTid){
+                    for(var i=0; i<teacherList.length; i++){
+                        if(selectTid == teacherList[i].id){
+                            app.receiveList = new Array(teacherList[i]);
+                            break;
+                        }else{
+                            continue;
+                        }
+                    }
+                }else{
+                    app.receiveList = res.data.data[0].receiveList;   
+                }
+                
             }
 
             setTimeout(function(){
@@ -201,7 +228,7 @@ function getOrderDetail(){
 
 function cancelOrder(){
     var cancelParam = {
-      "orderId": xq.getUrlParam('orderId'),
+      "orderId": app.orderId,
       "cancelReason": "家长发布后自己取消",
       "timestamp": new Date().getTime(),
       "appId": xq.appId
@@ -283,6 +310,26 @@ function wechatAuth(){
     });
 }
 
+function prePay(){
+    var payParam = {
+        "orderId":app.orderId,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+
+    var sign = xq.signCoputed(payParam);
+    payParam.sign = sign;
+
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.post(payUrl,payParam).then(function(res){
+        if(res.data.code == 200){
+            console.log(res.data.data)
+        }else{
+            $.toast(res.data.message);
+        }
+    });    
+}
+
 function getUrlCode(){
     var wxAccessToken = sessionStorage.getItem('wxAccessToken');
     var wxOpenId = sessionStorage.getItem('wxOpenId');
@@ -308,5 +355,23 @@ function getUrlCode(){
     //}
 }
 
-getUrlCode();
+window.addEventListener("popstate", function(e) { 
+    var deferrer = "myorder.html";
+    location.href = deferrer;
+}, false);
+
+function pushHistory() { 
+    var state = { 
+        title: "title", 
+        url: "#" 
+    }; 
+    window.history.pushState(state, "title", "#"); 
+} 
+
+function _pageInit(){
+    getUrlCode();
+    pushHistory();
+}
+_pageInit();
+
 

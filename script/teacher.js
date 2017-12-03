@@ -2,7 +2,10 @@
 var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
 var tokenApiUrl = xq.xqAPI + 'token/create';
 var getTeacherDetail = xq.xqAPI + 'parents/teacher/detail';
+var chooseTeacher = xq.xqAPI + 'parents/order/oto/choose';
+
 var teacherId = xq.getUrlParam('tid');
+var orderId = xq.getUrlParam('orderId');
 
 var app = new Vue({
     el:'#myApp',
@@ -30,7 +33,29 @@ var app = new Vue({
         email:''
     },
     methods:{
-        
+        selectTeacher:function (){
+            axios.defaults.headers.common['Authorization'] = "Bearer " + this.accessToken;
+
+            var chooseParam = {
+                "orderId":orderId,
+                "teacherId": teacherId,
+                "timestamp":new Date().getTime(),
+                "appId": xq.appId
+
+            };
+
+            var sign = xq.signCoputed(chooseParam);
+            chooseParam.sign = sign;
+
+            axios.post(chooseTeacher,chooseParam).then(function(res){
+                if(res.data.code == 200){
+                    var gotoUrl = "order_1.html?orderId="+orderId+"&selectTid="+teacherId;
+                    location.href = gotoUrl;  
+                }else{
+                    $.toast(res.data.message);    
+                }
+            });
+        }   
     },
     computed:{
         
@@ -144,5 +169,22 @@ function getUrlCode(){
     } 
 }
 
-getUrlCode();
+window.addEventListener("popstate", function(e) { 
+    var deferrer = "order_1.html?orderId="+orderId;
+    location.href = deferrer;
+}, false);
+
+function pushHistory() { 
+    var state = { 
+        title: "title", 
+        url: "#" 
+    }; 
+    window.history.pushState(state, "title", "#"); 
+}
+
+function _pageInit(){
+    getUrlCode();
+    pushHistory();
+}
+_pageInit();
 
