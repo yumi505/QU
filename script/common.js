@@ -46,6 +46,33 @@ var xq = {
         sign = sign + CryptoJS.MD5(this.app_secret);
         sign = CryptoJS.MD5(sign).toString();
         return sign;
+    },
+    wechatSignCoputed:function(data){
+        var arrParams = [];
+        var objParams = data;
+
+        for(var key in objParams){
+            if (objParams.hasOwnProperty(key)){
+                continue;
+            }
+            
+            key = key.toLowerCase();
+            
+            if(key == 'appid' || key == 'timestamp' || key == 'sign'){
+                continue;
+            }
+            
+            arrParams.push(key + '=' + objParams[key]);
+        }
+
+        arrParams.push('appid=' + this.appId);
+        arrParams.push('timestamp=' + (new Date().getTime()));
+        arrParams.sort();
+
+        var sign = arrParams.join('&');
+        sign = sign + CryptoJS.MD5(this.app_secret);
+        sign = CryptoJS.MD5(sign).toString();
+        return sign;
     }
 };
 

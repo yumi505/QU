@@ -117,6 +117,12 @@ var app = new Vue({
         },
         gotoPay:function(){
            prePay();  
+        },
+        getRandom:function(min, max){
+            var r = Math.random() * (max - min);
+            var re = Math.round(r + min);
+            re = Math.max(Math.min(re, max), min)
+            return re;
         }
     },
     computed:{
@@ -142,12 +148,6 @@ var app = new Vue({
 
             }
             return time;
-        },
-        getRandom:function(0, 100){
-            var r = Math.random() * (max - min);
-            var re = Math.round(r + min);
-            re = Math.max(Math.min(re, max), min)
-            return re;
         }
     } 
 });
@@ -323,11 +323,52 @@ function prePay(){
     axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
     axios.post(payUrl,payParam).then(function(res){
         if(res.data.code == 200){
-            console.log(res.data.data)
+            console.log(res.data.data);
+            var wechatParam = {
+               "appId":xq.appId,                    //公众号名称     
+               "timeStamp":new Date().getTime(),    //时间戳  
+               "nonceStr":Math.random().toString(), //随机串     
+               "package":res.data.data.prepay_id,   //预支付单号  
+               "signType":"MD5"                     //微信签名方式：     
+            };
+
+            var sign = xq.wechatSignCoputed(wechatParam);
+            payParam.paySign = sign;
+
+            wechatPay();
         }else{
             $.toast(res.data.message);
         }
     });    
+}
+
+function wechatPay(){
+    function onBridgeReady(){
+       WeixinJSBridge.invoke(
+           'getBrandWCPayRequest', {
+               "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入     
+               "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数     
+               "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串     
+               "package":"prepay_id=u802345jgfjsdfgsdg888",     
+               "signType":"MD5",         //微信签名方式：     
+               "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+           },
+           function(res){     
+               //请求查询支付接口      
+           }
+       ); 
+    }
+
+    if (typeof WeixinJSBridge == "undefined"){
+       if( document.addEventListener ){
+           document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+       }else if (document.attachEvent){
+           document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+           document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+       }
+    }else{
+       onBridgeReady();
+    }
 }
 
 function getUrlCode(){
