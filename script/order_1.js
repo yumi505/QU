@@ -324,7 +324,7 @@ function prePay(){
     axios.post(payUrl,payParam).then(function(res){
         if(res.data.code == 200){
             console.log(res.data.data);
-            var wechatParam = {
+            /*var wechatParam = {
                "appId":xq.appId,                    //公众号名称     
                "timeStamp":new Date().getTime(),    //时间戳  
                "nonceStr":Math.random().toString(), //随机串     
@@ -333,28 +333,36 @@ function prePay(){
             };
 
             var sign = xq.wechatSignCoputed(wechatParam);
-            payParam.paySign = sign;
+            payParam.paySign = sign;*/
 
-            wechatPay();
+            wechatPay(res.data.data[0]);
         }else{
             $.toast(res.data.message);
         }
     });    
 }
 
-function wechatPay(){
+function wechatPay(param){
     function onBridgeReady(){
        WeixinJSBridge.invoke(
            'getBrandWCPayRequest', {
-               "appId":"wx2421b1c4370ec43b",     //公众号名称，由商户传入     
-               "timeStamp":"1395712654",         //时间戳，自1970年以来的秒数     
-               "nonceStr":"e61463f8efa94090b1f366cccfbbb444", //随机串     
-               "package":"prepay_id=u802345jgfjsdfgsdg888",     
-               "signType":"MD5",         //微信签名方式：     
-               "paySign":"70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名 
+               "appId":param.appId,        //公众号名称，由商户传入     
+               "timeStamp":param.timeStamp,//时间戳，自1970年以来的秒数     
+               "nonceStr":param.nonceStr,  //随机串     
+               "package":param.package,     
+               "signType":param.signType,  //微信签名方式：     
+               "paySign":param.paySign     //微信签名 
            },
            function(res){     
-               //请求查询支付接口      
+               //请求支付结果
+               if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                  $.toast('支付成功');
+                    setTimeout(function(){
+                        location.reload();
+                    },2000);
+               }else{
+                 $.toast('支付失败');
+               }      
            }
        ); 
     }
