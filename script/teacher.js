@@ -10,7 +10,7 @@ var orderId = xq.getUrlParam('orderId');
 var app = new Vue({
     el:'#myApp',
     data:{
-        accessToken:'',//接口授权 accessToken
+        apiToken:'',//接口授权 apiToken
         wxCode:'',
         wxOpenId:'',
         wxAccessToken:'',
@@ -34,7 +34,7 @@ var app = new Vue({
     },
     methods:{
         selectTeacher:function (){
-            axios.defaults.headers.common['Authorization'] = "Bearer " + this.accessToken;
+            axios.defaults.headers.common['Authorization'] = "Bearer " + this.apiToken;
 
             var chooseParam = {
                 "orderId":orderId,
@@ -109,8 +109,8 @@ function creatToken(){
 
     axios.post(tokenApiUrl,tokenPara).then(function(res){
         if(res.data.code == 200){
-            app.accessToken = res.data.data[0].accessToken;
-            //sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
+            app.apiToken = res.data.data[0].accessToken;
+            sessionStorage.setItem('apiToken',res.data.data[0].accessToken);
             getTeachDetail();
         }else{
             $.toast(res.data.message);
@@ -121,7 +121,7 @@ function creatToken(){
 }
 
 function getTeachDetail(){
-    axios.defaults.headers.common['Authorization'] = "Bearer " + app.accessToken;
+    axios.defaults.headers.common['Authorization'] = "Bearer " + app.apiToken;
 
     var teacherParam = {
         'teacherId': teacherId,
@@ -160,13 +160,20 @@ function getTeachDetail(){
 }
 
 function getUrlCode(){
-    var wechatCode = xq.getUrlParam('code');
-    if(wechatCode){
-        app.wxCode = wechatCode;
-        wechatAuth();
+    var apiToken = sessionStorage.getItem('apiToken');
+     
+    if(apiToken){
+        app.apiToken = apiToken;
+        getTeachDetail();
     }else{
-      wechatLinkJump();  
-    } 
+        var wechatCode = xq.getUrlParam('code');
+        if(wechatCode){
+            app.wxCode = wechatCode;
+            wechatAuth();
+        }else{
+          wechatLinkJump();  
+        } 
+    }
 }
 
 window.addEventListener("popstate", function(e) { 

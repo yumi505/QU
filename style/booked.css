@@ -4,9 +4,9 @@
 }
 .list-ul .list-item{ padding: 0 .18rem; height: .81rem; line-height: .81rem; border-bottom: 1px solid #e7e7e7; font-size: .24rem; color: #333;}
 .list-ul .list-item .tit{ float: left; width: 1.3rem;}
-.list-ul .list-item .txt{ float: left;}
+.list-ul .list-item .txt{ float: left; width: 3.9rem;}
 .list-ul .list-item #datetime-picker{ border:none;}
-.list-ul .list-item .txt input{ border:none; border-bottom:1px solid #ccc; border-radius: 0;}
+.list-ul .list-item .txt input{ width: 100%; border:none; border-bottom:1px solid #ccc; border-radius: 0;}
 .list-ul .list-item a{ color: #333;}
 .list-item a [class^="ico-tri"],.list-item a [class*=" ico-tri"] { float: right; line-height: .81rem; color: #d6d6d6;}
 
@@ -28,7 +28,7 @@
 .list-ul .list-item:last-child{ height: 3rem;}
 .list-ul .list-item:last-child .tit{ float: none; display: block;}
 .list-ul .list-item:last-child .specil-request{
-	width: 100%; height:2rem; box-sizing:border-box; border:1px solid e7e7e7; resize:none;
+	width: 100%; height:2rem; box-sizing:border-box; border:1px solid #e7e7e7; resize:none;
 	line-height: 1.5; padding: .1rem; overflow: hidden;
 }
 

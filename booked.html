@@ -38,7 +38,7 @@
                         <a href="#">
                             <div class="txt">
                                <!--  <span>请选择</span> -->
-                               <input type="text" readonly id='datetime-picker'>
+                               <input type="text" placeholder="点击选择" readonly id='datetime-picker'>
                             </div>
                             <i class="ico-tri-right"></i>
                         </a>
@@ -80,7 +80,11 @@
                     </li>
                 </ul>
                 <div class="btn-tl-wrap">
-                    <a class="btn-tl btn-shadow" href="javascript:;" @click="submitOrder">一健预约</a>
+                    <a class="btn-tl btn-shadow" 
+                       href="javascript:;" 
+                       @click="submitOrder" 
+                       v-text="dateButtonTxt">
+                   </a>
                 </div>
             </div>
         </div>

@@ -9,7 +9,8 @@ var app = new Vue({
         orderList:[],
         wxCode:'',
         wxOpenId:'',
-        wxAccessToken:''
+        wxAccessToken:'',
+        apiToken:''//接口授权 apiToken
     },
     methods:{
         markStatus:function(param){
@@ -63,11 +64,6 @@ function wechatAuth(){
             app.wxOpenId = res.data.data[0].openId;
             app.wxAccessToken = res.data.data[0].accessToken;
 
-            sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
-            sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
-            sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
-            sessionStorage.setItem('sessionTimeStamp', new Date()*1);
-
             creatToken();
         }else{
             $.toast(res.data.message);
@@ -93,8 +89,8 @@ function creatToken(){
 
     axios.post(tokenApiUrl,tokenPara).then(function(res){
         if(res.data.code == 200){
-            app.accessToken = res.data.data[0].accessToken;
-            sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
+            app.apiToken = res.data.data[0].accessToken;
+            sessionStorage.setItem('apiToken',res.data.data[0].accessToken);
             $.showIndicator();
             getMyOrders(0);
         }else{
@@ -118,7 +114,7 @@ function getMyOrders(orderType){
 
     var sign = xq.signCoputed(orderListPara);
     orderListPara.sign = sign;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('apiToken');
 
     axios.get(getOrdersUrl,{params:orderListPara}).then(function(res){
         if(res.data.code == 200){
@@ -134,20 +130,12 @@ function getMyOrders(orderType){
 }
 
 function getUrlCode(){
-    var wxAccessToken = sessionStorage.getItem('wxAccessToken');
-    var wxOpenId = sessionStorage.getItem('wxOpenId');
-    var sessionTimeStamp = sessionStorage.getItem('sessionTimeStamp');
-    var expiresIn = sessionStorage.getItem('expiresIn');
-
-    var expiresTime = (new Date()*1) - parseInt(sessionTimeStamp,10);
-    expiresTime = expiresTime/1000 ;
-
-    //有 wxAccessToken 且在有效期内（expiresIn:7200秒）
-    /*if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
-        app.wxAccessToken = wxAccessToken;
-        app.wxOpenId = wxOpenId;
-        creatToken();
-    }else{*/
+    var apiToken = sessionStorage.getItem('apiToken');
+     
+    if(apiToken){
+        app.apiToken = apiToken;
+        getMyOrders(0);
+    }else{
         var wechatCode = xq.getUrlParam('code');
         if(wechatCode){
             app.wxCode = wechatCode;
@@ -155,7 +143,7 @@ function getUrlCode(){
         }else{
           wechatLinkJump();
         }
-    //}
+    }
 }
 
 getUrlCode();

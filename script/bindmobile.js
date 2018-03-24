@@ -107,7 +107,7 @@ function checkMobileBeforeSendCode() {
 function bindMobile(param){
     var sign = xq.signCoputed(param);
     param.sign = sign;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('apiToken');
 
     axios.post(bindMobileApiUrl,param).then(function(res){
         if(res.data.code == 200){

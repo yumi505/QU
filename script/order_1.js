@@ -85,10 +85,10 @@ var app = new Vue({
         cancelReason:'',
         wxAccessToken:'',
         wxOpenId:'',
-        accessToken:'',
         wxCode:'',
         endTime:'',
-        orderId:orderId
+        orderId:orderId,
+        apiToken:''
     },
     methods:{
         markStatus:function(param){
@@ -176,7 +176,7 @@ function getOrderDetail(){
     var sign = xq.signCoputed(orderParam);
     orderParam.sign = sign;
 
-    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('apiToken');
     axios.get(orderDetailUrl,{params:orderParam}).then(function(res){
         if(res.data.code == 200){
             //app.orderDetail = res.data.data[0];
@@ -237,41 +237,13 @@ function cancelOrder(){
     var sign = xq.signCoputed(cancelParam);
     cancelParam.sign = sign;
 
-    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('apiToken');
     axios.post(cancelOrderUrl,cancelParam).then(function(res){
         if(res.data.code == 200){
             setTimeout(function(){
                  location.reload();
             },1500);
             $.toast('订单已取消');
-        }else{
-            $.toast(res.data.message);
-        }
-    }).catch(function(err){
-        console.log(err);
-    });
-}
-
-function creatToken(){
-    var tokenPara = {
-        "userName": app.wxOpenId,
-        "password": app.wxAccessToken,
-        "validType": 3, //Auth验证
-        "authType": 1, //微信认证
-        "appSecret": xq.app_secret,
-        "timestamp": new Date().getTime(),
-        "appId": xq.appId
-    };
-
-    var sign = xq.signCoputed(tokenPara);
-    tokenPara.sign = sign;
-
-    axios.post(tokenApiUrl,tokenPara).then(function(res){
-        if(res.data.code == 200){
-            app.accessToken = res.data.data[0].accessToken;
-            sessionStorage.setItem('accessToken',res.data.data[0].accessToken);
-            //$.showIndicator();
-            getOrderDetail();
         }else{
             $.toast(res.data.message);
         }
@@ -296,12 +268,35 @@ function wechatAuth(){
             app.wxOpenId = res.data.data[0].openId;
             app.wxAccessToken = res.data.data[0].accessToken;
 
-            sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
-            sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
-            sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
-            sessionStorage.setItem('sessionTimeStamp', new Date()*1);
-
             creatToken();
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
+function creatToken(){
+    var tokenPara = {
+        "userName": app.wxOpenId,
+        "password": app.wxAccessToken,
+        "validType": 3, //Auth验证
+        "authType": 1, //微信认证
+        "appSecret": xq.app_secret,
+        "timestamp": new Date().getTime(),
+        "appId": xq.appId
+    };
+
+    var sign = xq.signCoputed(tokenPara);
+    tokenPara.sign = sign;
+
+    axios.post(tokenApiUrl,tokenPara).then(function(res){
+        if(res.data.code == 200){
+            app.apiToken = res.data.data[0].accessToken;
+            sessionStorage.setItem('apiToken',res.data.data[0].accessToken);
+            //$.showIndicator();
+            getOrderDetail();
         }else{
             $.toast(res.data.message);
         }
@@ -320,7 +315,7 @@ function prePay(){
     var sign = xq.signCoputed(payParam);
     payParam.sign = sign;
 
-    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('accessToken');
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem('apiToken');
     axios.post(payUrl,payParam).then(function(res){
         if(res.data.code == 200){
             console.log(res.data.data);
@@ -380,20 +375,12 @@ function wechatPay(param){
 }
 
 function getUrlCode(){
-    var wxAccessToken = sessionStorage.getItem('wxAccessToken');
-    var wxOpenId = sessionStorage.getItem('wxOpenId');
-    var sessionTimeStamp = sessionStorage.getItem('sessionTimeStamp');
-    var expiresIn = sessionStorage.getItem('expiresIn');
-
-    var expiresTime = (new Date()*1) - parseInt(sessionTimeStamp,10);
-    expiresTime = expiresTime/1000 ;
-
-    //有 wxAccessToken 且在有效期内（expiresIn:7200秒）
-   /* if(wxAccessToken && expiresTime < parseInt(expiresIn,10)){
-        app.wxAccessToken = wxAccessToken;
-        app.wxOpenId = wxOpenId;
-        creatToken();
-    }else{*/
+    var apiToken = sessionStorage.getItem('apiToken');
+     
+    if(apiToken){
+        app.apiToken = apiToken;
+        getOrderDetail();
+    }else{
         var wechatCode = xq.getUrlParam('code');
         if(wechatCode){
             app.wxCode = wechatCode;
@@ -401,7 +388,7 @@ function getUrlCode(){
         }else{
           wechatLinkJump();
         }
-    //}
+    }
 }
 
 window.addEventListener("popstate", function(e) { 
