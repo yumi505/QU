@@ -112,6 +112,11 @@ function bindMobile(param){
     axios.post(bindMobileApiUrl,param).then(function(res){
         if(res.data.code == 200){
             $.toast('绑定成功');
+
+            clearTimeout(timeout);
+            var timeout = setTimeout(function(){
+                location.href="order_1.html?orderId=" + xq.getUrlParam(orderId);
+            });
         }else{
             $.toast(res.data.message);
         }

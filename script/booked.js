@@ -323,7 +323,7 @@ function publishOrder(param){
             setTimeout(function(){
                 //location.href="order_1.html?orderId=" + res.data.data[0].orderId;
                 //预约成功后，跳转绑定手机
-                location.href="bindmobile.html";
+                location.href="bindmobile.html?orderId=" + res.data.data[0].orderId;
             },2000);
         }else{
             $.toast(res.data.message);
