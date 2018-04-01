@@ -223,7 +223,7 @@ var app = new Vue({
 
 function wechatLinkJump(){
     var wechatLink = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+xq.gzhAppId+"&redirect_uri="+
-    redirect_uri+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+    redirect_uri+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
 
     location.href = wechatLink;
 }
