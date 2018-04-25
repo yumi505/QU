@@ -4,6 +4,7 @@ var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
 var tokenApiUrl = xq.xqAPI + 'token/create';
 var hobbyApiUrl = xq.xqAPI + 'hobby/all/list';
 var publishOrderUrl = xq.xqAPI + 'parents/order/oto/publish';
+var getAccountInfoUrl = xq.xqAPI + 'parents/account/current';
 
 $(function(){
     Date.prototype.format = function(fmt) {
@@ -243,11 +244,6 @@ function wechatAuth(){
         if(res.data.code == 200){
             app.wxOpenId = res.data.data[0].openId;
             app.wxAccessToken = res.data.data[0].accessToken;
-
-            /*sessionStorage.setItem('wxOpenId',res.data.data[0].openId);
-            sessionStorage.setItem('wxAccessToken',res.data.data[0].accessToken);
-            sessionStorage.setItem('expiresIn',res.data.data[0].expiresIn);
-            sessionStorage.setItem('sessionTimeStamp', new Date()*1);*/
             
             creatToken();
         }else{
@@ -287,7 +283,6 @@ function creatToken(){
 
 function getHobby(){
     axios.defaults.headers.common['Authorization'] = "Bearer " + app.apiToken;
-    //axios.defaults.headers.get['Content-Type'] = 'application/json';
 
     var hobbyParam = {
         "timestamp": new Date().getTime(),
@@ -320,11 +315,30 @@ function publishOrder(param){
     axios.post(publishOrderUrl,param).then(function(res){
         if(res.data.code == 200){
             $.toast('预约成功');
-            setTimeout(function(){
-                //location.href="order_1.html?orderId=" + res.data.data[0].orderId;
-                //预约成功后，跳转绑定手机
-                location.href="bindmobile.html?orderId=" + res.data.data[0].orderId;
-            },2000);
+            //检查用户是否已绑定手机号
+            getAccountInfo(res.data.data[0].orderId);
+        }else{
+            $.toast(res.data.message);
+        }
+    }).catch(function(err){
+        console.log(err);
+    });
+}
+
+function getAccountInfo(orderId){
+    axios.defaults.headers.common['Authorization'] = "Bearer " + app.apiToken;
+
+    var param = {};
+
+    axios.get(getAccountInfoUrl,{params:param}).then(function(res){
+        if(res.data.code == 200){
+            if(!res.data.data.phoneNumber){
+                //跳转绑定手机
+                location.href="bindmobile.html?orderId=" + orderId;
+            }else{
+                //跳转订单详情
+                location.href="order_1.html?orderId=" + orderId;
+            }
         }else{
             $.toast(res.data.message);
         }

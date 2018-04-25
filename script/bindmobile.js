@@ -42,7 +42,7 @@ var app = new Vue({
         submitBindMobile:function(){
             var bindPara = {
               "phoneNumber": this.mobileInpVal,
-              "verifyCode": "111111",
+              "verifyCode": this.yzCodeInpVal?this.yzCodeInpVal:"111111",
               "timestamp": new Date().getTime(),
               "appId": xq.appId
             };
@@ -116,7 +116,7 @@ function bindMobile(param){
             clearTimeout(timeout);
             var timeout = setTimeout(function(){
                 location.href="order_1.html?orderId=" + xq.getUrlParam(orderId);
-            });
+            },2000);
         }else{
             $.toast(res.data.message);
         }
