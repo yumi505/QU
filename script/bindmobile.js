@@ -81,7 +81,7 @@ function checkMobileBeforeSendCode() {
             checkReult = true;
 
             var sendPara = {
-                "phone": xq.testPhoneNum,
+                "phone": app.mobileInpVal,
                 "timestamp": new Date().getTime(),
                 "appId": xq.appId
             };
