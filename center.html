@@ -24,10 +24,10 @@
         <div class="content-box">
             <div class="banner-box">
                 <div class="pic-box">
-                    <img src="images/img_01.jpg"/>
+                    <img :src="avatarThumbnailUrl"/>
                 </div>
                 <div class="tit-box">
-                    <p>WX账户名</p>
+                    <p>{{nickName}}</p>
                 </div>
             </div>
             <ul class="list-ul">
@@ -35,8 +35,13 @@
                     <label class="tit">手机</label>
                     <a href="bindmobile.html">
                         <div class="txt">
-                            <span class="txt-gray">请选择</span>
-                            <i class="ico-tri-right"></i>
+                            <p v-if="phoneNumber">
+                                <span>{{phoneNumber}}</span>
+                            </p>
+                            <p v-else>
+                                <span class="txt-gray">请选择</span>
+                                <i class="ico-tri-right"></i>
+                            </p>
                         </div>
                     </a>
                 </li>

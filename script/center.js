@@ -1,7 +1,19 @@
-﻿var app = new Vue({
+﻿var redirect_uri = encodeURIComponent(location.href);
+var wxAuthorUrl = xq.xqAPI + 'token/wx/create';
+var tokenApiUrl = xq.xqAPI + 'token/create';
+var getAccountInfoUrl = xq.xqAPI + 'parents/account/current';
+
+
+var app = new Vue({
     el:'#myApp',
     data:{
-        wxCode:'',    
+        apiToken:'',
+        wxCode:'',
+        wxOpenId:'',
+        wxAccessToken:'',
+        avatarThumbnailUrl:'',
+        nickName:'' ,
+        phoneNumber :''   
     },
     methods:{
          
@@ -58,7 +70,7 @@ function creatToken(){
         if(res.data.code == 200){
             app.apiToken = res.data.data[0].accessToken;
             sessionStorage.setItem('apiToken',res.data.data[0].accessToken);
-            getHobby();
+            getAccountInfo();
         }else{
             $.toast(res.data.message);
         }
@@ -67,20 +79,17 @@ function creatToken(){
     });
 }
 
-function getAccountInfo(orderId){
+function getAccountInfo(){
     axios.defaults.headers.common['Authorization'] = "Bearer " + app.apiToken;
 
     var param = {};
 
     axios.get(getAccountInfoUrl,{params:param}).then(function(res){
         if(res.data.code == 200){
-            if(!res.data.data.phoneNumber){
-                //跳转绑定手机
-                location.href="bindmobile.html?orderId=" + orderId;
-            }else{
-                //跳转订单详情
-                location.href="order_1.html?orderId=" + orderId;
-            }
+            var map = res.data.data[0];
+            app.avatarThumbnailUrl = map.avatarThumbnailUrl.split('@')[0];
+            app.nickName = map.nickName;
+            app.phoneNumber = map.phoneNumber;
         }else{
             $.toast(res.data.message);
         }
@@ -94,6 +103,7 @@ function getUrlCode(){
      
     if(apiToken){
         app.apiToken = apiToken;
+        getAccountInfo();
     }else{
         var wechatCode = xq.getUrlParam('code');
         if(wechatCode){
