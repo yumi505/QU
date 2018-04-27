@@ -1,4 +1,6 @@
-主机：test.gzh.xqudj.com/parents
+主机：test.gzh.xqudj.com/parents 
+
+106.15.180.155
 
 test.gzh.xqudj.com|FTP_GZH
 

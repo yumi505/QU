@@ -332,7 +332,7 @@ function getAccountInfo(orderId){
 
     axios.get(getAccountInfoUrl,{params:param}).then(function(res){
         if(res.data.code == 200){
-            if(!res.data.data.phoneNumber){
+            if(!res.data.data[0].phoneNumber){
                 //跳转绑定手机
                 location.href="bindmobile.html?orderId=" + orderId;
             }else{
