@@ -32,6 +32,8 @@
 .student-sex.boy .boy,
 .student-sex.girl .girl{ color: #69b93a;}
 
+.birthday,.inp-address{width: 100%; border:none;}
+
 .note-box{ font-size: .22rem; padding: 0 .28rem; background-color: #fff;}
 .note-box p{ line-height: .8rem;}
 .note-box textarea{ 
@@ -39,3 +41,10 @@
 	line-height: 1.5; padding: .1rem; overflow: hidden;
 }
 
+/*日历*/
+i.icon.icon-next, i.icon.icon-prev{width: 0.35rem; height: 0.35rem; }
+.picker-modal .toolbar-inner{ height: 1rem;}
+.picker-calendar-month-picker, .picker-calendar-year-picker{ line-height: 1rem;}
+.picker-calendar-month-picker a.icon-only, .picker-calendar-year-picker a.icon-only{ height: 1rem; line-height: 1rem;}
+.picker-calendar-month-picker .current-month-value, .picker-calendar-month-picker .current-year-value, .picker-calendar-year-picker .current-month-value, .picker-calendar-year-picker .current-year-value{height: 1rem;}
+.picker-calendar-month-picker .current-month-value, .picker-calendar-month-picker .current-year-value, .picker-calendar-year-picker .current-month-value, .picker-calendar-year-picker .current-year-value{ font-size: 0.3rem;}

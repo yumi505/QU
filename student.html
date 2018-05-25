@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="./style/student.css">
 </head>
 <body>
-    <div id="myApp">
+    <div id="myApp" class="page">
         <div class="header">
             <span class="icon-head-back"><a href="#"></a></span>
             <p class="text-head-title">个人资料</p>
@@ -36,7 +36,7 @@
                     <label class="tit">学生生日</label>
                     <a href="#">
                         <div class="txt">
-                            <i class="ico-tri-right"></i>
+                            <input class="birthday" type="text" placeholder="点击选择" readonly id='datetime-picker'>
                         </div>
                     </a>
                 </li>
@@ -44,17 +44,17 @@
                     <label class="tit">常用地址</label>
                     <a href="#">
                         <div class="txt">
-                            <i class="ico-tri-right"></i>
+                            <input class="inp-address" type="text" placeholder="点击输入" v-model="defaultAddress">
                         </div>
                     </a>
                 </li>
             </ul>
             <div class="note-box">
                 <p>备注</p>
-                <textarea placeholder="可补充学生的性格特征，生活习惯等信息，方便老师了解学生，从而选择更适合的教学方式；"></textarea>
+                <textarea v-model="noteTxt" placeholder="可补充学生的性格特征，生活习惯等信息，方便老师了解学生，从而选择更适合的教学方式；"></textarea >
             </div>
             <div class="btn-tl-wrap">
-                <a class="btn-tl btn-shadow" href="javascript:;">保存</a>
+                <a class="btn-tl btn-shadow" href="javascript:;" @click="saveInfo">保存</a>
             </div>
         </div>
     </div>
