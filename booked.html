@@ -4,20 +4,20 @@
     <title>我要发单</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
     <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" type="text/css" href="./style/common.css">
-    <link rel="stylesheet" type="text/css" href="./style/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="./style/icomoon.css?180603">
     <link rel="stylesheet" type="text/css" href="./style/lib/light7.min.css">
     <!-- 页面调用CSS -->
-    <link rel="stylesheet" type="text/css" href="./style/booked.css?180527">
+    <link rel="stylesheet" type="text/css" href="./style/booked.css?180603">
 </head>
 <body>
     <div id="myApp" v-cloak class="page-group">
         <div class="page page-current">
-            <div class="header">
+            <div class="header" style="display: none;">
                 <span class="icon-head-back"><a href="#"></a></span>
                 <p class="text-head-title">预约一对一课程</p>
                 <span class="icon-head-tool"></span>
@@ -60,7 +60,7 @@
                             </div>
                             <i class="ico-tri-right"></i>
                         </a> -->
-                        <div class="txt">
+                        <div class="txt open-popup" data-panel="#panel-right-address">
                            <input type="text" placeholder="请输入" v-model="classAddress">
                         </div>
                     </li>
@@ -89,7 +89,7 @@
             </div>
         </div>
         <!-- 选择课程类型 -->
-        <div class="select-type panel panel-left panel-revea" id="panel-right-hobby">
+        <div class="select-type panel panel-left" id="panel-right-hobby">
             <div class="header">
                 <span class="icon-head-back"><a href="#"></a></span>
                 <p class="text-head-title">选择兴趣类型</p>
@@ -119,6 +119,27 @@
                                 @click="selectType(item,newCourseType)"></li>
                         </ul>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- 选择地址 -->
+        <div class="select-add popup" id="panel-right-address">
+            <div class="header">
+                <span class="icon-head-back ico-tri-left" @click="getSearchKey">
+                    <a href="javascript:;"></a>
+                </span>
+                <p class="text-head-title">设置我的地址</p>
+                <span class="icon-head-tool"></span>
+            </div>
+            <div class="content-box">
+                <div class="main-box">
+                    <div class="search-wrap bg-fff">
+                        <input id="search-inp" class="search-inp" type="search" placeholder="请输入">
+                        <a href="javascript:;" class="ico-search-q"></a>
+                    </div>  
+                    <div id="search-result" class="search-result" @click="getSearchKey">
+                    </div> 
+                    <!-- <div id="container"></div> --> 
                 </div>
             </div>
         </div>
@@ -157,7 +178,8 @@
     <script type="text/javascript" src="./script/lib/axios.min.js"></script>
     <script type="text/javascript" src="./script/lib/light7.min.js"></script>
     <script type="text/javascript" src="./script/lib/crypto-js.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=dc65d3352bc06181398b3a9c056c5b80&plugin=AMap.Autocomplete""></script>
     <script type="text/javascript" src="./script/common.js"></script>
-    <script type="text/javascript" src="./script/booked.js"></script>
+    <script type="text/javascript" src="./script/booked.js?180603"></script>
 </body>
 </html>

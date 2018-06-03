@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?osrzgi');
-  src:  url('fonts/icomoon.eot?osrzgi#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?osrzgi') format('truetype'),
-    url('fonts/icomoon.woff?osrzgi') format('woff'),
-    url('fonts/icomoon.svg?osrzgi#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?68fsm4');
+  src:  url('fonts/icomoon.eot?68fsm4#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?68fsm4') format('truetype'),
+    url('fonts/icomoon.woff?68fsm4') format('woff'),
+    url('fonts/icomoon.svg?68fsm4#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -80,4 +80,10 @@
 }
 .ico-wallet-q:before {
   content: "\e911";
+}
+.ico-search-q:before {
+  content: "\e913";
+}
+.ico-tri-left:before {
+  content: "\e914";
 }
