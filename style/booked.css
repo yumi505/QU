@@ -1,10 +1,10 @@
-﻿[cloak]{ display: none;}
+[cloak]{ display: none;}
 .content-box .list-ul{ margin:.24rem .2rem 0; padding: 0 .1rem; height: auto; overflow: hidden;
 	background-color: #fff; border-radius: 5px;
 }
 .list-ul .list-item{ padding: 0 .18rem; height: .81rem; line-height: .81rem; border-bottom: 1px solid #e7e7e7; font-size: .24rem; color: #333;}
 .list-ul .list-item .tit{ float: left; width: 1.3rem;}
-.list-ul .list-item .txt{ float: left; width: 3.9rem;}
+.list-ul .list-item .txt{float: left;width: 3.6rem;}
 .list-ul .list-item #datetime-picker{ border:none;}
 .list-ul .list-item .txt input{ width: 100%; border:none; border-bottom:1px solid #ccc; border-radius: 0;}
 .list-ul .list-item a{ color: #333;}
