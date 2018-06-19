@@ -1,10 +1,11 @@
-﻿[cloak]{ display: none;}
+[cloak]{ display: none;}
+#myApp .header .icon-head-back{ padding-left: 10px; }
 .content-box .list-ul{ margin:.24rem .2rem 0; padding: 0 .1rem; height: auto; overflow: hidden;
 	background-color: #fff; border-radius: 5px;
 }
 .list-ul .list-item{ padding: 0 .18rem; height: .81rem; line-height: .81rem; border-bottom: 1px solid #e7e7e7; font-size: .24rem; color: #333;}
 .list-ul .list-item .tit{ float: left; width: 1.3rem;}
-.list-ul .list-item .txt{ float: left; width: 3.9rem;}
+.list-ul .list-item .txt{float: left;width: 3.6rem;}
 .list-ul .list-item #datetime-picker{ border:none;}
 .list-ul .list-item .txt input{ width: 100%; border:none; border-bottom:1px solid #ccc; border-radius: 0;}
 .list-ul .list-item a{ color: #333;}
@@ -61,3 +62,16 @@ body.with-panel-left-cover .panel-left{
 .select-type .menu-two .ul-box{ font-size: .22rem; }
 .select-type .menu-two .ul-box .item-li{ height: .66rem; line-height: .66rem; border-bottom: 1px solid #ececec; color:#333;}
 .select-type .menu-two .ul-box .item-li.selected{ color:#69b93a;}
+
+/* 地图 */
+.bg-fff{ background: #fff; }
+.select-add{ background: #eee; }
+.select-add .main-box{ padding: 0.2rem;}
+/* #container{margin-top: 0.1rem; width: 100%; height: 600px;}  */
+.search-wrap{ height: 0.6rem; box-sizing: border-box;padding: 5px 0 5px 10px; 
+	border:1px solid #ccc;border-radius: 5px; font-size: 0.28rem; 
+} 
+.search-wrap .search-inp{ width:86%; height: 0.4rem; border:none;} 
+.search-wrap .ico-search-q{ float: right; margin: 5px; color: #69b93a;} 
+.search-result{ margin-top: 0.1rem; border-radius: 5px; background: #fff;}
+.search-result .auto-item{ font-size: 0.22rem; padding: 5px;}

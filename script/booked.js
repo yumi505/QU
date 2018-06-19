@@ -98,6 +98,8 @@ var app = new Vue({
         hobbyId:'',
         classesTime:'',
         classAddress:'',
+        lngX:0,
+        latY:0,
         classesType: 1,
         studentCount: 1,
         remark:'',
@@ -156,8 +158,8 @@ var app = new Vue({
                 "classesTime": '',
                 "classesType": this.classesType,
                 "address": this.classAddress,
-                "lngX": 0,
-                "latY": 0,
+                "lngX": this.lngX,
+                "latY": this.latY,
                 "studentCount": this.studentCount,
                 "remark": this.remark,
                 "timestamp": new Date().getTime(),
@@ -206,6 +208,10 @@ var app = new Vue({
             }
 
             publishOrder(publishOrderParam);
+        },
+        getSearchKey(){
+            app.classAddress = $('#search-inp').val();
+            $.closeModal('#panel-right-address');
         }
     },
     computed:{
@@ -347,6 +353,28 @@ function getAccountInfo(orderId){
     });
 }
 
+function excuteMapFn(){
+    AMap.plugin('AMap.Autocomplete', function(){
+        // 实例化Autocomplete
+        var autoOptions = {
+            // input 为绑定输入提示功能的input的DOM ID
+            input: 'search-inp',
+            city:'上海',
+            citylimit:true,
+            output:'search-result'
+        }
+
+        var autoComplete= new AMap.Autocomplete(autoOptions);
+
+        autoComplete.on('select',function(result){
+            var _poi = result.poi;
+            app.classAddress = _poi.name;   
+            app.lngX = _poi.location.lng;   
+            app.latY = _poi.location.lat;   
+        });
+    });
+}
+
 function getUrlCode(){
     var apiToken = sessionStorage.getItem('apiToken');
      
@@ -362,7 +390,12 @@ function getUrlCode(){
           wechatLinkJump();  
         } 
     }
+
+    //加载地图服务
+    excuteMapFn();
 }
 
 getUrlCode();
+
+
 
